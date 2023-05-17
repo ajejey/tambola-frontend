@@ -1,0 +1,25 @@
+.player-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    margin: 20px auto;
+  }
+  
+  .player-list-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .player-list-item {
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    padding: 10px;
+  }
+  

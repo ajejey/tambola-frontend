@@ -1,0 +1,52 @@
+  .game-board {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    justify-items: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 20px auto;
+    gap: 20px;
+  }
+  
+  .number {
+    background-color: #f2f2f2;
+    border-radius: 50%;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+  }
+  
+  .number:hover {
+    background-color: #ccc;
+  }
+  
+  .highlight {
+    background-color: #333;
+    color: #f2f2f2;
+  }
+
+
+  .popping {
+    animation: popping 0.5s ease-out infinite;
+  }
+  
+  @keyframes popping {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  

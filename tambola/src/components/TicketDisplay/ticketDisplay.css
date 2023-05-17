@@ -1,0 +1,30 @@
+.ticket-display {
+    max-width: 600px;
+    margin: 20px auto;
+    /* border: 5px solid black; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .ticket-row {
+    display: flex;
+  }
+  
+  .ticket-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: 1px solid black;
+  }
+  
+  .ticket-cell.empty {
+    background-color: #e2e2e2;
+    color: #fff;
+  }
+  
