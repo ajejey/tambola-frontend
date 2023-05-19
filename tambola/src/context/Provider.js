@@ -9,7 +9,8 @@ export const GlobalProvider = ({ children }) => {
     const [userID, setUserID] = useState("")
     const [allUsers, setAllUsers] = useState([])
     const [host, setHost] = useState("")
-    const socket = io("http://localhost:5000")
+    // const socket = io("http://localhost:5000")
+    const socket = io("https://tambola-backend-production.up.railway.app/")
 
     return (
         <GlobalContext.Provider
