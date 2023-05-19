@@ -151,7 +151,9 @@ console.log("struckNumber", struckNumbers)
     });
     socket.on('private', userTicket => {
       console.log("inside socket ticket {userName,numbers,allUserNames}", userTicket);
-      convertTicketFormat(userTicket.numbers)
+      if(userTicket.userName === userID){
+        convertTicketFormat(userTicket.numbers)
+      }
       // setAllUsers(userTicket.allUserNames)
       setHost(userTicket.allUserNames[0])
     });
