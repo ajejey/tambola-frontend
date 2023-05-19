@@ -77,6 +77,7 @@
   .main-background {
     background: linear-gradient(to left, #dddddd, #ffffff);
     width: 100%;
-    height: 200vh;
-    position: absolute;
+    display: flex;
+    flex-direction: column;
   }
+  

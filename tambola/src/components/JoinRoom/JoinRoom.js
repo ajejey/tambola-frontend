@@ -1,22 +1,19 @@
 import React, { useContext, useEffect } from 'react'
 import './JoinRoom.css'
-import io from 'socket.io-client'
 import { GlobalContext } from '../../context/Provider'
 import Background from '../Background/Background'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { nanoid } from 'nanoid'
 
-const socket = io("http://localhost:5000")
-
 export default function JoinRoom() {
-  const { roomID, setRoomID, userID, setUserID } = useContext(GlobalContext)
+  const { roomID, setRoomID, userID, setUserID, socket } = useContext(GlobalContext)
   let [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate()
 
   const handleJoinRoom = () => {
     if (userID.length && roomID.length) {
       socket.emit('join', { room: roomID, userName: userID })
-      navigate("/game-room")
+      navigate(`/game-room?userName=${userID}&roomName=${roomID}`)
     }
   }
 

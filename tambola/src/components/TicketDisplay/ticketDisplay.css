@@ -21,10 +21,113 @@
     font-size: 1.5rem;
     font-weight: bold;
     border: 1px solid black;
+    cursor: pointer;
   }
   
   .ticket-cell.empty {
     background-color: #e2e2e2;
     color: #fff;
   }
+
+  .score-category-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  
+  .score-category {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: lightgray;
+    border-radius: 16px;
+    font-size: 14px;
+    border: 1px solid black;
+  }
+  
+  .category {
+    margin-right: 8px;
+  }
+  
+  .chip {
+    margin-left: 10px;
+    padding: 4px 8px;
+    background-color: #777;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .chip:hover {
+    background-color: #555;
+  }
+  
+  .chip.disabled {
+    background-color: #ccc;
+    color: #555;
+    cursor: not-allowed;
+  }
+  
+  .chip.claimed {
+    background-color: #444;
+  }
+  
+  .chip.claimed:hover {
+    background-color: #222;
+  }
+  
+  .info-icon {
+    position: relative;
+    display: inline-block;
+    margin-left: 3px;
+  }
+  
+  .info-icon svg {
+    width: 16px;
+    height: 16px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    padding: 8px;
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  .info-icon:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  }
+  
+  
   

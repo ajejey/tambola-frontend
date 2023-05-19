@@ -48,5 +48,48 @@
       transform: scale(1);
     }
   }
+
+  .start-call-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    margin-left: 5vw;
+  }
   
+  .start-call-button:hover {
+    background-color: #555;
+  }
+
+  .chips {
+    display: flex;
+    gap: 10px;
+    margin-right: 5vw;
+  }
+  
+  .chips button {
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .chips button:hover {
+    background-color: #555;
+  }
+  
+  .chips button.selected {
+    background-color: grey;
+    color: black;
+    border: 1px solid black;
+  }
   

@@ -1,13 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './GameRoom.css'
 import Board from '../Board/Board'
 import TicketDisplay from '../TicketDisplay/TicketDisplay'
 import PlayerList from '../PlayerList/PlayerList'
 import { GlobalContext } from '../../context/Provider'
+import { useSearchParams } from 'react-router-dom'
 
 export default function GameRoom() {
-    const { roomID, userID } = useContext(GlobalContext)
-    console.log("in game", roomID, userID)
+    const { setRoomID, setUserID, socket } = useContext(GlobalContext)
+    let [searchParams, setSearchParams] = useSearchParams();
+
+    // useEffect(() => {
+    //     socket.on('join', joiningConfirmation => {
+    //         console.log("inside socket joiningConfirmation", joiningConfirmation);
+    //     });
+    // }, [socket])
+
+    useEffect(() => {
+        if (Object.fromEntries([...searchParams])) {
+            setUserID(Object.fromEntries([...searchParams]).userName)
+            setRoomID(Object.fromEntries([...searchParams]).roomName)
+            socket.emit('join', { userName: Object.fromEntries([...searchParams]).userName, room: Object.fromEntries([...searchParams]).roomName })
+        }
+    }, [])
 
     return (
         <div className='main-background'>
@@ -19,13 +34,6 @@ export default function GameRoom() {
                 <span>o</span>
                 <span>l</span>
                 <span>a</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "5vw"}}>
-                <div>Current Number: <strong>{12}</strong></div>
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", marginRight: "5vw", marginBottom: "20px" }}>
-                    <div>Room name: {roomID || 123}</div>
-                    <div>User name: {userID || 567}</div>
-                </div>
             </div>
             <Board />
             <br />

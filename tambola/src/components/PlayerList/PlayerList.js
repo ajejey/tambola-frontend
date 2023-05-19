@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import './playerList.css';
-// import io from 'socket.io-client';
-
-// const socket = io('http://localhost:5000');
+import { GlobalContext } from '../../context/Provider';
+import { useContext } from 'react';
 
 function PlayerList() {
   const [players, setPlayers] = useState([]);
+  const { allUsers } = useContext(GlobalContext)
 
   // Listen for updates to the players array from the server
   useEffect(() => {
-    // socket.on('players', (newPlayers) => {
-    //   setPlayers(newPlayers);
-    // });
-    setPlayers([{id: 1, name: "Ajey"}, {id: 2, name: "Radhika"}])
-  }, []);
+  setPlayers(allUsers)
+  }, [allUsers]);
 
   return (
-    <div className="player-list">
-      <h2>Players</h2>
-      <ul>
-        {players.map((player) => (
-          <li key={player.id}>{player.name}</li>
-        ))}
-      </ul>
+    <div>
+      <h2 style={{display: "flex", justifyContent: "center", marginBottom: "12px"}}>PLAYERS</h2>
+      <table className="player-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {players.length && players.map((player, index) => (
+            <tr key={index}>
+              <td>{player.userName}</td>
+              <td>{player.score}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -1,57 +1,83 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './board.css';
-import io from 'socket.io-client';
 import { GlobalContext } from '../../context/Provider';
-
-var socket
+import { useSearchParams } from 'react-router-dom';
 
 function Board() {
-  const { roomID, userID } = useContext(GlobalContext)
-  const [numbers, setNumbers] = useState([]);
+  const { roomID, userID, host, socket } = useContext(GlobalContext)
+  let [searchParams, setSearchParams] = useSearchParams();
   const [lastNumber, setLastNumber] = useState(null);
-  const board = [];
   const [calledNumbers, setCalledNumbers] = useState([]);
+  const [selectedChip, setSelectedChip] = useState('3000')
+  const [disableSelections, setDisableSelections] = useState(false)
+  const board = [];
 
   // Create an array with numbers 1 to 90
   for (let i = 1; i <= 90; i++) {
     board.push(i);
   }
 
-  const handleStartCall = () => {
-    socket.emit('callNumbers', { userName: userID, room: roomID, timeInterval:5000 })
+  const handleChipClick = (chip) => {
+    setSelectedChip(chip);
+    setSearchParams({ ...Object.fromEntries([...searchParams]), selectedTime: chip })
   }
 
-  // Listen for updates to the numbers array from the server
-  // useEffect(() => {
-  //   // socket.on('numbers', (newNumbers) => {
-  //   //   setNumbers(newNumbers);
-  //   // });
-  //   setNumbers([1, 10, 35, 49, 85])
-  // }, []);
-  // }, [socket]);
+  const handleStartCall = () => {
+    console.log("{ userName: userID, room: roomID, timeInterval:5000 }", { userName: userID, room: roomID, timeInterval: Number(selectedChip) })
+    if (userID.length && roomID.length) {
+      socket.emit('callNumbers', { userName: userID, room: roomID, timeInterval: Number(selectedChip) })
+      setDisableSelections(true)
+      setSearchParams({ ...Object.fromEntries([...searchParams]), disableCall: true })
+    }
+  }
 
   useEffect(() => {
-    socket = io.connect("http://localhost:5000")
-    console.log("inside useEffect");
-    socket.on('calledNumber', randomNumber => {
-      console.log("inside socket",randomNumber);
-    });
-  })
+    if (calledNumbers.length > 0) {
+      setLastNumber(calledNumbers[calledNumbers.length - 1]);
+    }
+  }, [calledNumbers]);
 
-  // useEffect(() => {
-  //   if (numbers.length > 0) {
-  //     setLastNumber(numbers[numbers.length - 1]);
-  //   }
-  // }, [numbers]);
+  useEffect(() => {
+    socket.on('calledNumber', randomNumber => {
+      console.log("inside socket calledNumbers", randomNumber);
+      setCalledNumbers(randomNumber);
+    });
+  }, [socket])
+
+  useEffect(() => {
+    if (Object.fromEntries([...searchParams]).selectedTime) {
+      setSelectedChip(Object.fromEntries([...searchParams]).selectedTime)
+    }
+    if (Object.fromEntries([...searchParams]).disableCall) {
+      setDisableSelections(Object.fromEntries([...searchParams]).disableCall)
+    }
+  }, [])
 
   return (
     <div>
-      <button onClick={handleStartCall}>Start Calling</button>
+      <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "5vw" }}>
+        <div>Current Number: <strong>{lastNumber}</strong></div>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", marginRight: "5vw", marginBottom: "20px" }}>
+          <div>Room name: {roomID}</div>
+          <div>User name: {userID}</div>
+        </div>
+      </div>
+      {(userID.length && host.length && userID === host) ?
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <button className="start-call-button" onClick={handleStartCall} disabled={disableSelections}>Start Calling</button>
+          <div className="chips">
+            <button disabled={disableSelections} className={selectedChip === '3000' ? 'selected' : ''} onClick={() => handleChipClick('3000')}>3sec</button>
+            <button disabled={disableSelections} className={selectedChip === '5000' ? 'selected' : ''} onClick={() => handleChipClick('5000')}>5sec</button>
+            <button disabled={disableSelections} className={selectedChip === '7000' ? 'selected' : ''} onClick={() => handleChipClick('7000')}>7sec</button>
+          </div>
+        </div>
+        : <br />
+      }
       <div className="game-board">
         {board.map((number, index) => (
           <div
             key={number}
-            className={`number ${numbers.includes(number) ? 'highlight' : ''} ${lastNumber === number ? 'popping' : ''}`}
+            className={`number ${calledNumbers.includes(number) ? 'highlight' : ''} ${lastNumber === number ? 'popping' : ''}`}
           >
             {number}
           </div>

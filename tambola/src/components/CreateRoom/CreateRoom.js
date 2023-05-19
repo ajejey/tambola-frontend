@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react'
 import './CreateRoom.css'
-import io from 'socket.io-client'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { GlobalContext } from '../../context/Provider';
@@ -8,17 +7,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import Background from '../Background/Background';
 
-const socket = io("http://localhost:5000")
-
 export default function () {
-    const { roomID, setRoomID, userID, setUserID } = useContext(GlobalContext)
+    const { roomID, setRoomID, userID, setUserID, setHost, socket } = useContext(GlobalContext)
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
 
     const handleCreateRoom = () => {
         if (userID.length && roomID.length) {
             socket.emit('join', { room: roomID, userName: userID })
-            navigate("/game-room")
+            setHost(userID)
+            navigate(`/game-room?userName=${userID}&roomName=${roomID}`)
         }
     }
 
