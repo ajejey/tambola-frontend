@@ -113,15 +113,15 @@ function Board() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "5vw" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>Current Number: <strong>{lastNumber}</strong></div>
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", marginRight: "5vw", marginBottom: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px",marginRight:"2vw", marginBottom: "20px" }}>
           <div>Room name: {roomID}</div>
           <div>User name: {userID}</div>
         </div>
       </div>
       {(userID.length && host.length && userID === host) ?
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginRight: "2vw"}}>
           <button className="start-call-button" onClick={handleStartCall} disabled={disableSelections}>Start Calling</button>
           <div className="chips">
             <button disabled={disableSelections} className={selectedChip === '3000' ? 'selected' : ''} onClick={() => handleChipClick('3000')}>3sec</button>

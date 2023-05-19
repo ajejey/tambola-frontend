@@ -14,6 +14,7 @@ function TicketDisplay() {
   const [claimedCategories, setClaimedCategories] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
+  const [claimed, setClaimed] = useState([])
 
   const checkClaimedCategory = (claimedCategory) => {
     let claimIsValid = false
@@ -54,55 +55,67 @@ function TicketDisplay() {
           }
           break;
         case 'CORNERS_1':
-          let firstLineNumFirst_corner1 = ticket[0].filter((num) => num !== null)[0]
-          let firstLineNumFifth_corner1 = ticket[0].filter((num) => num !== null)[4]
-          let lastLineNumFirst_corner1 = ticket[2].filter((num) => num !== null)[0]
-          let lastLineNumFifth_corner1 = ticket[2].filter((num) => num !== null)[4]
-          let arrayTocheck_corner1 = [firstLineNumFirst_corner1, firstLineNumFifth_corner1, lastLineNumFirst_corner1, lastLineNumFifth_corner1]
-          if (arrayTocheck_corner1.every((number) => struckNumbers.includes(number))) {
-            claimIsValid = true
+          if (!claimed.includes("CORNERS_2")) {
+            let firstLineNumFirst_corner1 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_corner1 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_corner1 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_corner1 = ticket[2].filter((num) => num !== null)[4]
+            let arrayTocheck_corner1 = [firstLineNumFirst_corner1, firstLineNumFifth_corner1, lastLineNumFirst_corner1, lastLineNumFifth_corner1]
+            if (arrayTocheck_corner1.every((number) => struckNumbers.includes(number))) {
+              claimIsValid = true
+            }
           }
           break;
         case 'CORNERS_2':
-          let firstLineNumFirst_corner2 = ticket[0].filter((num) => num !== null)[0]
-          let firstLineNumFifth_corner2 = ticket[0].filter((num) => num !== null)[4]
-          let lastLineNumFirst_corner2 = ticket[2].filter((num) => num !== null)[0]
-          let lastLineNumFifth_corner2 = ticket[2].filter((num) => num !== null)[4]
-          let arrayTocheck_corner2 = [firstLineNumFirst_corner2, firstLineNumFifth_corner2, lastLineNumFirst_corner2, lastLineNumFifth_corner2]
-          if (arrayTocheck_corner2.every((number) => struckNumbers.includes(number))) {
-            claimIsValid = true
+          if (!claimed.includes("CORNERS_1")) {
+            let firstLineNumFirst_corner2 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_corner2 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_corner2 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_corner2 = ticket[2].filter((num) => num !== null)[4]
+            let arrayTocheck_corner2 = [firstLineNumFirst_corner2, firstLineNumFifth_corner2, lastLineNumFirst_corner2, lastLineNumFifth_corner2]
+            if (arrayTocheck_corner2.every((number) => struckNumbers.includes(number))) {
+              claimIsValid = true
+            }
           }
           break;
         case 'STAR_1':
-          let firstLineNumFirst_star1 = ticket[0].filter((num) => num !== null)[0]
-          let firstLineNumFifth_star1 = ticket[0].filter((num) => num !== null)[4]
-          let lastLineNumFirst_star1 = ticket[2].filter((num) => num !== null)[0]
-          let lastLineNumFifth_star1 = ticket[2].filter((num) => num !== null)[4]
-          let middleNumber_star1 = ticket[1].filter((num) => num !== null)[2]
-          let arrayTocheck_star1 = [firstLineNumFirst_star1, firstLineNumFifth_star1, lastLineNumFirst_star1, lastLineNumFifth_star1, middleNumber_star1]
-          if (arrayTocheck_star1.every((number) => struckNumbers.includes(number))) {
-            claimIsValid = true
+          if (!claimed.includes("STAR_2")) {
+            let firstLineNumFirst_star1 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_star1 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_star1 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_star1 = ticket[2].filter((num) => num !== null)[4]
+            let middleNumber_star1 = ticket[1].filter((num) => num !== null)[2]
+            let arrayTocheck_star1 = [firstLineNumFirst_star1, firstLineNumFifth_star1, lastLineNumFirst_star1, lastLineNumFifth_star1, middleNumber_star1]
+            if (arrayTocheck_star1.every((number) => struckNumbers.includes(number))) {
+              claimIsValid = true
+            }
           }
           break;
         case 'STAR_2':
-          let firstLineNumFirst_star2 = ticket[0].filter((num) => num !== null)[0]
-          let firstLineNumFifth_star2 = ticket[0].filter((num) => num !== null)[4]
-          let lastLineNumFirst_star2 = ticket[2].filter((num) => num !== null)[0]
-          let lastLineNumFifth_star2 = ticket[2].filter((num) => num !== null)[4]
-          let middleNumber_star2 = ticket[1].filter((num) => num !== null)[2]
-          let arrayTocheck_star2 = [firstLineNumFirst_star2, firstLineNumFifth_star2, lastLineNumFirst_star2, lastLineNumFifth_star2, middleNumber_star2]
-          if (arrayTocheck_star2.every((number) => struckNumbers.includes(number))) {
-            claimIsValid = true
+          if (!claimed.includes("STAR_1")) {
+            let firstLineNumFirst_star2 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_star2 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_star2 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_star2 = ticket[2].filter((num) => num !== null)[4]
+            let middleNumber_star2 = ticket[1].filter((num) => num !== null)[2]
+            let arrayTocheck_star2 = [firstLineNumFirst_star2, firstLineNumFifth_star2, lastLineNumFirst_star2, lastLineNumFifth_star2, middleNumber_star2]
+            if (arrayTocheck_star2.every((number) => struckNumbers.includes(number))) {
+              claimIsValid = true
+            }
           }
           break;
         case 'FULL_HOUSE_1':
-          if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
-            claimIsValid = true
+          if (!claimed.includes("FULL_HOUSE_2")) {
+            if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
+              claimIsValid = true
+            }
           }
           break;
         case 'FULL_HOUSE_2':
-          if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
-            claimIsValid = true
+          if (!claimed.includes("FULL_HOUSE_2")) {
+            if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
+              claimIsValid = true
+            }
           }
           break;
         default:
@@ -148,7 +161,17 @@ function TicketDisplay() {
     }
     setTicket(finalTicket)
   }
-console.log("struckNumber", struckNumbers)
+
+  console.log("struckNumber", struckNumbers)
+
+  useEffect(() => {
+    if(claimed.length > 0){
+      let key = `claimed_${claimed.length}`
+      setSearchParams({ ...Object.fromEntries([...searchParams]), [key]: claimed[claimed.length -1] })
+    }
+  }, [claimed])
+  console.log("claimed", claimed)
+
   useEffect(() => {
     socket.on('struckNumber', struckNumberResponse => {
       console.log("inside socket struck numbers", struckNumberResponse)
@@ -158,7 +181,7 @@ console.log("struckNumber", struckNumbers)
     });
     socket.on('private', userTicket => {
       console.log("inside socket ticket {userName,numbers,allUserNames}", userTicket);
-      if(userTicket.userName === userID){
+      if (userTicket.userName === userID) {
         convertTicketFormat(userTicket.numbers)
       }
       // setAllUsers(userTicket.allUserNames)
@@ -166,6 +189,7 @@ console.log("struckNumber", struckNumbers)
     });
     socket.on('category', categoryAndScores => {
       console.log("inside socket categoryAndScores", categoryAndScores)
+      setClaimed(categoryAndScores?.scoreCategory?.map((item) => item.category));
       setAllUsers(categoryAndScores.allUsers)
       setClaimedCategories(categoryAndScores.categoryCard.category.filter((item) => item.claimed === true).map((item) => item.category))
     });
@@ -175,6 +199,11 @@ console.log("struckNumber", struckNumbers)
   }, [socket])
 
   useEffect(() => {
+    setClaimedCategories(["FULL_HOUSE_1"])
+    if (Object.keys(Object.fromEntries([...searchParams])).some(str => str.includes("claimed"))) {
+      let allClaimed = Object.keys(Object.fromEntries([...searchParams])).filter(str => str.includes("claimed"))
+      setClaimed(allClaimed.map(key => Object.fromEntries([...searchParams])[key]))
+    }
     console.log("inside [useffect", userID, roomID)
     if (userID.length && roomID.length) {
       socket.emit('getTicket', { userName: userID, room: roomID })
@@ -208,7 +237,7 @@ console.log("struckNumber", struckNumbers)
         )}
         <div className="score-category-list">
           {scoreCategories.map((category, index) => (
-            <div key={index} className="score-category">
+            <div key={index} className="score-category" style={claimedCategories.includes(category.category) ? {backgroundColor: "#FF2366"}: {}}>
               <div className="category">{category.category}</div>
               <div className="score">{category.score}</div>
               <div className="info-icon">

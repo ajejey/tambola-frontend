@@ -35,9 +35,13 @@ export default function GameRoom() {
                 <span>l</span>
                 <span>a</span>
             </div>
-            <Board />
+            <div style={{display: 'flex', justifyContent: "space-evenly", marginLeft:"3vw"}}>
+                <Board />
+                <TicketDisplay />
+            </div>
+            {/* <Board />
             <br />
-            <TicketDisplay />
+            <TicketDisplay /> */}
             <PlayerList />
         </div>
     )

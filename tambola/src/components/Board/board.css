@@ -4,9 +4,10 @@
     grid-template-rows: repeat(9, 1fr);
     justify-items: center;
     align-items: center;
-    max-width: 1200px;
+    max-width: 920px;
     margin: 20px auto;
-    gap: 20px;
+    gap: 10px;
+    margin-right: 2vw;
   }
   
   .number {
@@ -59,7 +60,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: flex;
-    margin-left: 5vw;
+    /* margin-left: 5vw; */
   }
   
   .start-call-button:hover {
@@ -69,7 +70,7 @@
   .chips {
     display: flex;
     gap: 10px;
-    margin-right: 5vw;
+    /* margin-right: 5vw; */
   }
   
   .chips button {
