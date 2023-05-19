@@ -31,9 +31,67 @@ function Board() {
     }
   }
 
+  function numberToString(number) {
+    const numberString = String(number);
+    const numberWords = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+    const specialNumberWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tensWords = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    let outputString = '';
+
+    if (number > 0 && number < 10) {
+      outputString = `Single Number ${numberString[0]}`;
+      console.log(outputString);
+      return outputString;
+    }
+
+    if (number == 10) {
+      outputString = 'One Zero. Ten.';
+      console.log(outputString);
+      return outputString;
+    }
+
+    if (number > 10 && number < 20) {
+      outputString = `${numberString[0]} ${numberString[1]}. ${specialNumberWords[number - 10]}.`;
+      console.log(outputString);
+      return outputString;
+    }
+
+    if (number % 10 === 0 && number >= 20 && number < 100) {
+      outputString = `${numberString[0]} ${numberString[1]}. ${tensWords[Number(numberString[0])]}`;
+      console.log(outputString);
+      return outputString;
+    }
+
+    if (number > 20 && number < 100) {
+      outputString = `${numberString[0]} ${numberString[1]}. ${tensWords[Number(numberString[0])]} ${Number(numberString[1])}`;
+      console.log(outputString);
+      return outputString;
+    }
+  }
+
+
+  const handleVoiceNumberCall = (voiceNumber) => {
+    const utterance = new SpeechSynthesisUtterance(numberToString(voiceNumber));
+
+    // Get the available voices
+    const voices = speechSynthesis.getVoices();
+    // voices.forEach(voice => console.log(voice.name));
+
+
+    // Set the desired voice
+    utterance.voice = voices.find(voice => voice.name === 'Google UK English Female');
+
+    // Speak the utterance
+    speechSynthesis.speak(utterance);
+
+
+  }
+
   useEffect(() => {
     if (calledNumbers.length > 0) {
       setLastNumber(calledNumbers[calledNumbers.length - 1]);
+      handleVoiceNumberCall(calledNumbers[calledNumbers.length - 1])
     }
   }, [calledNumbers]);
 

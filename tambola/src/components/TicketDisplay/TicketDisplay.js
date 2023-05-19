@@ -5,6 +5,7 @@ import { GlobalContext } from '../../context/Provider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { scoreCategories } from '../../constants/constants';
+import { useSearchParams } from 'react-router-dom';
 
 function TicketDisplay() {
   const { roomID, userID, setAllUsers, setHost, socket } = useContext(GlobalContext)
@@ -12,6 +13,7 @@ function TicketDisplay() {
   const [struckNumbers, setStruckNumbers] = useState([])
   const [claimedCategories, setClaimedCategories] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const checkClaimedCategory = (claimedCategory) => {
     let claimIsValid = false
@@ -94,6 +96,11 @@ function TicketDisplay() {
           }
           break;
         case 'FULL_HOUSE_1':
+          if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
+            claimIsValid = true
+          }
+          break;
+        case 'FULL_HOUSE_2':
           if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
             claimIsValid = true
           }
