@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './playerList.css';
 import { GlobalContext } from '../../context/Provider';
 import { useContext } from 'react';
+import HowToPlay from '../HowToPlay/HowToPlay';
 
 function PlayerList() {
   const [players, setPlayers] = useState([]);
@@ -37,6 +38,7 @@ function PlayerList() {
           </table>
         </>
       }
+      <HowToPlay />
     </div>
   );
 }

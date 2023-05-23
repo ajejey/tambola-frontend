@@ -4,6 +4,7 @@ import { GlobalContext } from '../../context/Provider'
 import Background from '../Background/Background'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { nanoid } from 'nanoid'
+import HowToPlay from '../HowToPlay/HowToPlay'
 
 export default function JoinRoom() {
   const { roomID, setRoomID, userID, setUserID, userName, socket } = useContext(GlobalContext)
@@ -56,6 +57,7 @@ export default function JoinRoom() {
           <button onClick={handleCloseJoin}>Close</button>
         </div>
       </div>
+      <HowToPlay />
     </div>
   )
 }

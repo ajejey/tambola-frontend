@@ -6,6 +6,7 @@ import { GlobalContext } from '../../context/Provider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import Background from '../Background/Background';
+import HowToPlay from '../HowToPlay/HowToPlay';
 
 export default function () {
     const { roomID, setRoomID, userID, setUserID, setHost, socket } = useContext(GlobalContext)
@@ -70,6 +71,7 @@ export default function () {
                     <button onClick={handleCloseCreate}>Close</button>
                 </div>
             </div>
+            <HowToPlay />
         </div>
     )
 }

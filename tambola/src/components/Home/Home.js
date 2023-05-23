@@ -3,6 +3,7 @@ import './Home.css'
 import Background from '../Background/Background'
 import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from '../../context/Provider'
+import HowToPlay from '../HowToPlay/HowToPlay'
 
 export default function Home() {
     const navigate = useNavigate()
@@ -45,6 +46,7 @@ export default function Home() {
                 <button disabled={userID.length === 0} className={userID.length === 0 ? "disabled-button" : ""} onClick={handleCreateRoom}>Create Room</button>
                 <button disabled={userID.length === 0} className={userID.length === 0 ? "disabled-button" : ""} onClick={handleJoinRoom}>Join Room</button>
             </div>
+            <HowToPlay />
         </div>
     )
 }
