@@ -9,9 +9,10 @@ function PlayerList() {
 
   // Listen for updates to the players array from the server
   useEffect(() => {
-    let sortedArray = allUsers.sort((a, b) => a.score - b.score)
-    setPlayers(sortedArray)
+    let sortedArray = [...allUsers].sort((a, b) => b.score - a.score);
+    setPlayers(sortedArray);
   }, [allUsers]);
+  
 
   return (
     <div>

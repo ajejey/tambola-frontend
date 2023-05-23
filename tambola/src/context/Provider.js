@@ -9,6 +9,7 @@ export const GlobalProvider = ({ children }) => {
     const [userID, setUserID] = useState("")
     const [allUsers, setAllUsers] = useState([])
     const [host, setHost] = useState("")
+    const [allCategoriesClaimed, setAllCategoriesClaimed] = useState(false)
     // const socket = io("http://localhost:5000")
     const socket = io("https://tambola-backend-production.up.railway.app/")
 
@@ -23,6 +24,8 @@ export const GlobalProvider = ({ children }) => {
                 setAllUsers,
                 host, 
                 setHost,
+                allCategoriesClaimed, 
+                setAllCategoriesClaimed,
                 socket
             }}>
             {children}

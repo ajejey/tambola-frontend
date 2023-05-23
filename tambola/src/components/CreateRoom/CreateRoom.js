@@ -33,14 +33,15 @@ export default function () {
             document.execCommand("copy");
         }
     }
+      
 
     useEffect(() => {
-        let newUserId = nanoid(4)
+        // let newUserId = nanoid(4)
+        // setUserID(newUserId)
         let newRoomId = nanoid(6)
-        setUserID(newUserId)
         setRoomID(newRoomId)
-        setSearchParams({ userName: newUserId, roomName: newRoomId })
-        console.log("room", newUserId, newRoomId)
+        setSearchParams({ userName: userID, roomName: newRoomId })
+        console.log("room", userID, newRoomId)
     }, [])
 
     return (

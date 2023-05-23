@@ -68,8 +68,8 @@
   }
   
   .chip.disabled {
-    background-color: #ccc;
-    color: #555;
+    background-color: #333;
+    color: white;
     cursor: not-allowed;
   }
   
@@ -121,7 +121,7 @@
     top: 20px;
     right: 20px;
     padding: 10px 20px;
-    background-color: #f44336;
+    background-color: #646464;
     color: #fff;
     border-radius: 4px;
     font-size: 14px;

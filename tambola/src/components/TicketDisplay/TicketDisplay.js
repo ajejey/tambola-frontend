@@ -8,7 +8,7 @@ import { scoreCategories } from '../../constants/constants';
 import { useSearchParams } from 'react-router-dom';
 
 function TicketDisplay() {
-  const { roomID, userID, setAllUsers, setHost, socket } = useContext(GlobalContext)
+  const { roomID, userID, setAllUsers, setHost, setAllCategoriesClaimed, socket } = useContext(GlobalContext)
   const [ticket, setTicket] = useState([]);
   const [struckNumbers, setStruckNumbers] = useState([])
   const [claimedCategories, setClaimedCategories] = useState([]);
@@ -168,6 +168,9 @@ function TicketDisplay() {
     if(claimed.length > 0){
       let key = `claimed_${claimed.length}`
       setSearchParams({ ...Object.fromEntries([...searchParams]), [key]: claimed[claimed.length -1] })
+      if(claimed.length === 12){
+        setAllCategoriesClaimed(true)
+      }
     }
   }, [claimed])
   console.log("claimed", claimed)
@@ -199,7 +202,7 @@ function TicketDisplay() {
   }, [socket])
 
   useEffect(() => {
-    setClaimedCategories(["FULL_HOUSE_1"])
+    setClaimedCategories([])
     if (Object.keys(Object.fromEntries([...searchParams])).some(str => str.includes("claimed"))) {
       let allClaimed = Object.keys(Object.fromEntries([...searchParams])).filter(str => str.includes("claimed"))
       setClaimed(allClaimed.map(key => Object.fromEntries([...searchParams])[key]))
@@ -237,9 +240,9 @@ function TicketDisplay() {
         )}
         <div className="score-category-list">
           {scoreCategories.map((category, index) => (
-            <div key={index} className="score-category" style={claimedCategories.includes(category.category) ? {backgroundColor: "#FF2366"}: {}}>
-              <div className="category">{category.category}</div>
-              <div className="score">{category.score}</div>
+            <div key={index} className="score-category" style={claimedCategories.includes(category.category) ? {backgroundColor: "#737272"}: {}}>
+              <div className="category" style={claimedCategories.includes(category.category) ? {color: "white"}: {}}>{category.category}</div>
+              <div className="score" style={claimedCategories.includes(category.category) ? {color: "white"}: {}}>{category.score}</div>
               <div className="info-icon">
                 <FontAwesomeIcon icon={faInfoCircle} />
                 <div className="tooltip">{category.description}</div>

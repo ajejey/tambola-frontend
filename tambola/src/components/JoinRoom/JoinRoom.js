@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { nanoid } from 'nanoid'
 
 export default function JoinRoom() {
-  const { roomID, setRoomID, userID, setUserID, socket } = useContext(GlobalContext)
+  const { roomID, setRoomID, userID, setUserID, userName, socket } = useContext(GlobalContext)
   let [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate()
 
@@ -29,10 +29,10 @@ export default function JoinRoom() {
   }
 
   useEffect(() => {
-    let newUserId = nanoid(4)
-    setUserID(newUserId)
-    setSearchParams({ userName: newUserId })
-    console.log("room", newUserId)
+    // let newUserId = nanoid(4)
+    // setUserID(newUserId)
+    setSearchParams({ userName: userID })
+    console.log("join room", userID)
   }, [])
 
   return (

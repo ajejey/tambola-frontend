@@ -4,7 +4,7 @@ import { GlobalContext } from '../../context/Provider';
 import { useSearchParams } from 'react-router-dom';
 
 function Board() {
-  const { roomID, userID, host, socket } = useContext(GlobalContext)
+  const { roomID, userID, host, allCategoriesClaimed, socket } = useContext(GlobalContext)
   let [searchParams, setSearchParams] = useSearchParams();
   const [lastNumber, setLastNumber] = useState(null);
   const [calledNumbers, setCalledNumbers] = useState([]);
@@ -96,10 +96,12 @@ function Board() {
   }, [calledNumbers]);
 
   useEffect(() => {
-    socket.on('calledNumber', randomNumber => {
-      console.log("inside socket calledNumbers", randomNumber);
-      setCalledNumbers(randomNumber);
-    });
+    if (allCategoriesClaimed === false) {
+      socket.on('calledNumber', randomNumber => {
+        console.log("inside socket calledNumbers", randomNumber);
+        setCalledNumbers(randomNumber);
+      });
+    }
   }, [socket])
 
   useEffect(() => {
@@ -115,13 +117,13 @@ function Board() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>Current Number: <strong>{lastNumber}</strong></div>
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px",marginRight:"2vw", marginBottom: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", marginRight: "2vw", marginBottom: "20px" }}>
           <div>Room name: {roomID}</div>
           <div>User name: {userID}</div>
         </div>
       </div>
       {(userID.length && host.length && userID === host) ?
-        <div style={{ display: "flex", justifyContent: "space-between", marginRight: "2vw"}}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginRight: "2vw" }}>
           <button className="start-call-button" onClick={handleStartCall} disabled={disableSelections}>Start Calling</button>
           <div className="chips">
             <button disabled={disableSelections} className={selectedChip === '3000' ? 'selected' : ''} onClick={() => handleChipClick('3000')}>3sec</button>

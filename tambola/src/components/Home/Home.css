@@ -1,30 +1,53 @@
 .initial-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-    gap: 20px
-  }
-  
-  .initial-screen p {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .initial-screen button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .initial-screen button:hover {
-    background-color: #555;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  gap: 20px;
+}
+
+.initial-screen p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.initial-screen button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.initial-screen button.disabled-button {
+  background-color: #bebebe;
+  color: white;
+  cursor: not-allowed;
+}
+
+.initial-screen button:hover:not(.disabled-button) {
+  background-color: #555;
+}
+
+.user-name-input {
+  display: flex;
+  justify-content: center;
+}
+
+.user-name-input label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-name-input input {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  width: 200px;
+  margin-right: 10px;
+}
