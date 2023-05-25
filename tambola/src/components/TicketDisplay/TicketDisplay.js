@@ -15,6 +15,7 @@ function TicketDisplay() {
   const [showNotification, setShowNotification] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
   const [claimed, setClaimed] = useState([])
+  const [disabledButtons, setDisabledButtons] = useState([]);
 
   const checkClaimedCategory = (claimedCategory) => {
     let claimIsValid = false
@@ -112,7 +113,7 @@ function TicketDisplay() {
           }
           break;
         case 'FULL_HOUSE_2':
-          if (!claimed.includes("FULL_HOUSE_2")) {
+          if (!claimed.includes("FULL_HOUSE_1")) {
             if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
               claimIsValid = true
             }
@@ -129,6 +130,17 @@ function TicketDisplay() {
 
   const handleChipClick = (category) => {
     console.log("clicked", category, scoreCategories.find((item) => item.category === category))
+    const isCategoryClaimed = claimedCategories.includes(category);
+    if (isCategoryClaimed) {
+      return; // Exit the function if the category is already claimed
+    }
+
+    // Disable the button
+    setDisabledButtons([...disabledButtons, category]);
+    setTimeout(() => {
+      setDisabledButtons(disabledButtons.filter((button) => button !== category));
+    }, 2000);
+
     let checkCategory = checkClaimedCategory(category)
     console.log("check category", checkCategory)
     if (checkCategory === false) {
@@ -141,6 +153,7 @@ function TicketDisplay() {
     if (userID.length && roomID.length && checkCategory) {
       socket.emit('category', { userName: userID, room: roomID, scoreCategory: scoreCategories.find((item) => item.category === category) })
     }
+
   };
 
   const handleNumberClick = (number) => {
@@ -165,10 +178,10 @@ function TicketDisplay() {
   console.log("struckNumber", struckNumbers)
 
   useEffect(() => {
-    if(claimed.length > 0){
+    if (claimed.length > 0) {
       let key = `claimed_${claimed.length}`
-      setSearchParams({ ...Object.fromEntries([...searchParams]), [key]: claimed[claimed.length -1] })
-      if(claimed.length === 12){
+      setSearchParams({ ...Object.fromEntries([...searchParams]), [key]: claimed[claimed.length - 1] })
+      if (claimed.length === 12) {
         setAllCategoriesClaimed(true)
       }
     }
@@ -192,9 +205,11 @@ function TicketDisplay() {
     });
     socket.on('category', categoryAndScores => {
       console.log("inside socket categoryAndScores", categoryAndScores)
-      setClaimed(categoryAndScores?.scoreCategory?.map((item) => item.category));
-      setAllUsers(categoryAndScores.allUsers)
-      setClaimedCategories(categoryAndScores.categoryCard.category.filter((item) => item.claimed === true).map((item) => item.category))
+      if (categoryAndScores.userName === userID) {
+        setClaimed(categoryAndScores?.scoreCategory?.map((item) => item.category));
+        setAllUsers(categoryAndScores.allUsers)
+        setClaimedCategories(categoryAndScores.categoryCard.category.filter((item) => item.claimed === true).map((item) => item.category))
+      }
     });
     // socket.on('error', errorMessage => {
     //   console.log("getTicket error", errorMessage)
@@ -240,16 +255,16 @@ function TicketDisplay() {
         )}
         <div className="score-category-list">
           {scoreCategories.map((category, index) => (
-            <div key={index} className="score-category" style={claimedCategories.includes(category.category) ? {backgroundColor: "#737272"}: {}}>
-              <div className="category" style={claimedCategories.includes(category.category) ? {color: "white"}: {}}>{category.category}</div>
-              <div className="score" style={claimedCategories.includes(category.category) ? {color: "white"}: {}}>{category.score}</div>
+            <div key={index} className="score-category" style={claimedCategories.includes(category.category) ? { backgroundColor: "#737272" } : {}}>
+              <div className="category" style={claimedCategories.includes(category.category) ? { color: "white" } : {}}>{category.category}</div>
+              <div className="score" style={claimedCategories.includes(category.category) ? { color: "white" } : {}}>{category.score}</div>
               <div className="info-icon">
                 <FontAwesomeIcon icon={faInfoCircle} />
                 <div className="tooltip">{category.description}</div>
               </div>
               <button
                 className={`chip ${claimedCategories.includes(category.category) ? 'disabled' : ''}`}
-                disabled={claimedCategories.includes(category.category)}
+                disabled={claimedCategories.includes(category.category) || disabledButtons.includes(category.category)}
                 onClick={() => handleChipClick(category.category)}
               >
                 {claimedCategories.includes(category.category) ? 'Claimed' : 'Claim'}
