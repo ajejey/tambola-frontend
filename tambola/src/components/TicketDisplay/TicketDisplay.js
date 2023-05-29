@@ -201,7 +201,7 @@ function TicketDisplay() {
         convertTicketFormat(userTicket.numbers)
       }
       setAllUsers(userTicket.allUsers)
-      setHost(userTicket.allUserNames[0])
+      setHost(userTicket.allUsers[0]?.userName)
     });
     socket.on('category', categoryAndScores => {
       console.log("inside socket categoryAndScores", categoryAndScores)
