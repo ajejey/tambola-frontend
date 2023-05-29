@@ -200,15 +200,15 @@ function TicketDisplay() {
       if (userTicket.userName === userID) {
         convertTicketFormat(userTicket.numbers)
       }
-      // setAllUsers(userTicket.allUserNames)
+      setAllUsers(userTicket.allUsers)
       setHost(userTicket.allUserNames[0])
     });
     socket.on('category', categoryAndScores => {
       console.log("inside socket categoryAndScores", categoryAndScores)
+      setAllUsers(categoryAndScores.allUsers)
+      setClaimedCategories(categoryAndScores.categoryCard.category.filter((item) => item.claimed === true).map((item) => item.category))
       if (categoryAndScores.userName === userID) {
         setClaimed(categoryAndScores?.scoreCategory?.map((item) => item.category));
-        setAllUsers(categoryAndScores.allUsers)
-        setClaimedCategories(categoryAndScores.categoryCard.category.filter((item) => item.claimed === true).map((item) => item.category))
       }
     });
     // socket.on('error', errorMessage => {

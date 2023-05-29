@@ -4,11 +4,17 @@ import Board from '../Board/Board'
 import TicketDisplay from '../TicketDisplay/TicketDisplay'
 import PlayerList from '../PlayerList/PlayerList'
 import { GlobalContext } from '../../context/Provider'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export default function GameRoom() {
     const { setRoomID, setUserID, socket } = useContext(GlobalContext)
+    const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
+
+    const handleHomeButtonClick = () => {
+        setRoomID("")
+        navigate("/")
+    }
 
     // useEffect(() => {
     //     socket.on('join', joiningConfirmation => {
@@ -26,7 +32,7 @@ export default function GameRoom() {
 
     return (
         <div className='main-background'>
-            <div className="tambola">
+            <div onClick={handleHomeButtonClick} className="tambola">
                 <span>T</span>
                 <span>a</span>
                 <span>m</span>
@@ -35,6 +41,7 @@ export default function GameRoom() {
                 <span>l</span>
                 <span>a</span>
             </div>
+            <button onClick={handleHomeButtonClick} style={{width: "100px", margin: "12px 3vw", padding: "8px", borderRadius: "5px", cursor: "pointer"}}>Home</button>
             <div style={{display: 'flex', justifyContent: "space-between", marginLeft:"3vw"}}>
                 <Board />
                 <TicketDisplay />

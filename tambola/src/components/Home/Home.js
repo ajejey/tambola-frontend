@@ -35,7 +35,7 @@ export default function Home() {
             </div>
             <div className='user-name-input'>
                 <div>
-                    <label htmlFor="username">User Name</label>
+                    <label htmlFor="username">Enter your Name</label>
                     <br />
                     <input type="text" id="username" value={userID} onChange={handleUsernameChange} />
                 </div>

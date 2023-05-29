@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import './board.css';
 import { GlobalContext } from '../../context/Provider';
 import { useSearchParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
 
 function Board() {
   const { roomID, userID, host, allCategoriesClaimed, socket } = useContext(GlobalContext)
@@ -10,6 +12,7 @@ function Board() {
   const [calledNumbers, setCalledNumbers] = useState([]);
   const [selectedChip, setSelectedChip] = useState('3000')
   const [disableSelections, setDisableSelections] = useState(false)
+  const [callingMuted, setCallingMuted] = useState(false)
   const board = [];
 
   // Create an array with numbers 1 to 90
@@ -88,10 +91,16 @@ function Board() {
 
   }
 
+  const handleSoundClick = () => {
+    setCallingMuted(!callingMuted)
+  }
+
   useEffect(() => {
     if (calledNumbers.length > 0) {
       setLastNumber(calledNumbers[calledNumbers.length - 1]);
-      handleVoiceNumberCall(calledNumbers[calledNumbers.length - 1])
+      if (callingMuted === false) {
+        handleVoiceNumberCall(calledNumbers[calledNumbers.length - 1])
+      }
     }
   }, [calledNumbers]);
 
@@ -133,6 +142,7 @@ function Board() {
         </div>
         : <br />
       }
+      <div onClick={handleSoundClick} style={{display: "flex", justifyContent: "flex-end"}}>{callingMuted === false ? <FontAwesomeIcon fontSize="25px" style={{ padding: "12px 8px 0", cursor: "pointer" }} icon={faVolumeHigh} /> : <FontAwesomeIcon fontSize="25px" style={{ padding: "12px 8px 0", cursor: "pointer" }} icon={faVolumeMute} />}</div>
       <div className="game-board">
         {board.map((number, index) => (
           <div
