@@ -13,6 +13,8 @@ function Board() {
   const [selectedChip, setSelectedChip] = useState('3000')
   const [disableSelections, setDisableSelections] = useState(false)
   const [callingMuted, setCallingMuted] = useState(false)
+  const [isCalling, setIsCalling] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const board = [];
 
   // Create an array with numbers 1 to 90
@@ -26,11 +28,31 @@ function Board() {
   }
 
   const handleStartCall = () => {
+    setIsCalling(true);
+    setIsPaused(false);
     console.log("{ userName: userID, room: roomID, timeInterval:5000 }", { userName: userID, room: roomID, timeInterval: Number(selectedChip) })
     if (userID.length && roomID.length) {
       socket.emit('callNumbers', { userName: userID, room: roomID, timeInterval: Number(selectedChip) })
       setDisableSelections(true)
       setSearchParams({ ...Object.fromEntries([...searchParams]), disableCall: true })
+    }
+  }
+
+  const handleResumeCall = () => {
+    setIsPaused(false);
+    if (userID.length && roomID.length) {
+      socket.emit('resumeCall', { userName: userID, room: roomID })
+      setDisableSelections(false)
+      setSearchParams({ ...Object.fromEntries([...searchParams]), disableCall: false })
+    }
+  }
+
+  const handlePauseCall = () => {
+    setIsPaused(true);
+    if (userID.length && roomID.length) {
+      socket.emit('pauseCall', { userName: userID, room: roomID })
+      setDisableSelections(false)
+      setSearchParams({ ...Object.fromEntries([...searchParams]), disableCall: false })
     }
   }
 
@@ -133,7 +155,20 @@ function Board() {
       </div>
       {(userID.length && host.length && userID === host) ?
         <div style={{ display: "flex", justifyContent: "space-between", marginRight: "2vw" }}>
-          <button className="start-call-button" onClick={handleStartCall} disabled={disableSelections}>Start Calling</button>
+          <div>
+            {!isCalling && <button className="start-call-button" onClick={handleStartCall}>Start Calling</button>}
+            {/* <button className="start-call-button" onClick={handleStartCall} disabled={isCalling}>
+              {isCalling ? "Calling..." : "Start Calling"}
+            </button> */}
+            {isCalling && !isPaused && (
+              <button className="start-call-button" onClick={handlePauseCall}>Pause</button>
+            )}
+            {isPaused && (
+              <button className="start-call-button" onClick={handleResumeCall}>Resume</button>
+            )}
+          </div>
+
+
           <div className="chips">
             <button disabled={disableSelections} className={selectedChip === '3000' ? 'selected' : ''} onClick={() => handleChipClick('3000')}>3sec</button>
             <button disabled={disableSelections} className={selectedChip === '5000' ? 'selected' : ''} onClick={() => handleChipClick('5000')}>5sec</button>
@@ -142,7 +177,7 @@ function Board() {
         </div>
         : <br />
       }
-      <div onClick={handleSoundClick} style={{display: "flex", justifyContent: "flex-end"}}>{callingMuted === false ? <FontAwesomeIcon fontSize="25px" style={{ padding: "12px 8px 0", cursor: "pointer" }} icon={faVolumeHigh} /> : <FontAwesomeIcon fontSize="25px" style={{ padding: "12px 8px 0", cursor: "pointer" }} icon={faVolumeMute} />}</div>
+      <div onClick={handleSoundClick} style={{ display: "flex", justifyContent: "flex-end" }}>{callingMuted === false ? <FontAwesomeIcon fontSize="25px" style={{ padding: "12px 8px 0", cursor: "pointer" }} icon={faVolumeHigh} /> : <FontAwesomeIcon fontSize="25px" style={{ padding: "12px 8px 0", cursor: "pointer" }} icon={faVolumeMute} />}</div>
       <div className="game-board">
         {board.map((number, index) => (
           <div
