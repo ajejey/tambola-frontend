@@ -42,7 +42,7 @@ function Board() {
     setIsPaused(false);
     if (userID.length && roomID.length) {
       socket.emit('resumeCall', { userName: userID, room: roomID })
-      setDisableSelections(false)
+      // setDisableSelections(false)
       setSearchParams({ ...Object.fromEntries([...searchParams]), disableCall: false })
     }
   }
@@ -51,7 +51,7 @@ function Board() {
     setIsPaused(true);
     if (userID.length && roomID.length) {
       socket.emit('pauseCall', { userName: userID, room: roomID })
-      setDisableSelections(false)
+     // setDisableSelections(false)
       setSearchParams({ ...Object.fromEntries([...searchParams]), disableCall: false })
     }
   }
