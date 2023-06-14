@@ -19,39 +19,40 @@ function TicketDisplay() {
 
   const checkClaimedCategory = (claimedCategory) => {
     let claimIsValid = false
+    let struckNumbersCopy = [...new Set(struckNumbers)]
     if (ticket.length) {
       switch (claimedCategory) {
         case 'EARLY_FIVE':
-          if (struckNumbers.length >= 5) {
+          if (struckNumbersCopy.length >= 5) {
             claimIsValid = true
           }
           break;
         case 'EARLY_SEVEN':
-          if (struckNumbers.length >= 7) {
+          if (struckNumbersCopy.length >= 7) {
             claimIsValid = true
           }
           break;
         case 'MIDDLE_NUMBER':
           let middleNumber = ticket[1].filter((num) => num !== null)[2]
-          if (struckNumbers.includes(middleNumber)) {
+          if (struckNumbersCopy.includes(middleNumber)) {
             claimIsValid = true
           }
           break;
         case 'FIRST_LINE':
           let firstLineNumbers = ticket[0].filter((num) => num !== null)
-          if (firstLineNumbers.every((number) => struckNumbers.includes(number))) {
+          if (firstLineNumbers.every((number) => struckNumbersCopy.includes(number))) {
             claimIsValid = true
           }
           break;
         case 'MIDDLE_LINE':
           let midLineNumbers = ticket[1].filter((num) => num !== null)
-          if (midLineNumbers.every((number) => struckNumbers.includes(number))) {
+          if (midLineNumbers.every((number) => struckNumbersCopy.includes(number))) {
             claimIsValid = true
           }
           break;
         case 'LAST_LINE':
           let lastLineNumbers = ticket[2].filter((num) => num !== null)
-          if (lastLineNumbers.every((number) => struckNumbers.includes(number))) {
+          if (lastLineNumbers.every((number) => struckNumbersCopy.includes(number))) {
             claimIsValid = true
           }
           break;
@@ -62,7 +63,7 @@ function TicketDisplay() {
             let lastLineNumFirst_corner1 = ticket[2].filter((num) => num !== null)[0]
             let lastLineNumFifth_corner1 = ticket[2].filter((num) => num !== null)[4]
             let arrayTocheck_corner1 = [firstLineNumFirst_corner1, firstLineNumFifth_corner1, lastLineNumFirst_corner1, lastLineNumFifth_corner1]
-            if (arrayTocheck_corner1.every((number) => struckNumbers.includes(number))) {
+            if (arrayTocheck_corner1.every((number) => struckNumbersCopy.includes(number))) {
               claimIsValid = true
             }
           }
@@ -74,7 +75,7 @@ function TicketDisplay() {
             let lastLineNumFirst_corner2 = ticket[2].filter((num) => num !== null)[0]
             let lastLineNumFifth_corner2 = ticket[2].filter((num) => num !== null)[4]
             let arrayTocheck_corner2 = [firstLineNumFirst_corner2, firstLineNumFifth_corner2, lastLineNumFirst_corner2, lastLineNumFifth_corner2]
-            if (arrayTocheck_corner2.every((number) => struckNumbers.includes(number))) {
+            if (arrayTocheck_corner2.every((number) => struckNumbersCopy.includes(number))) {
               claimIsValid = true
             }
           }
@@ -87,7 +88,7 @@ function TicketDisplay() {
             let lastLineNumFifth_star1 = ticket[2].filter((num) => num !== null)[4]
             let middleNumber_star1 = ticket[1].filter((num) => num !== null)[2]
             let arrayTocheck_star1 = [firstLineNumFirst_star1, firstLineNumFifth_star1, lastLineNumFirst_star1, lastLineNumFifth_star1, middleNumber_star1]
-            if (arrayTocheck_star1.every((number) => struckNumbers.includes(number))) {
+            if (arrayTocheck_star1.every((number) => struckNumbersCopy.includes(number))) {
               claimIsValid = true
             }
           }
@@ -100,21 +101,21 @@ function TicketDisplay() {
             let lastLineNumFifth_star2 = ticket[2].filter((num) => num !== null)[4]
             let middleNumber_star2 = ticket[1].filter((num) => num !== null)[2]
             let arrayTocheck_star2 = [firstLineNumFirst_star2, firstLineNumFifth_star2, lastLineNumFirst_star2, lastLineNumFifth_star2, middleNumber_star2]
-            if (arrayTocheck_star2.every((number) => struckNumbers.includes(number))) {
+            if (arrayTocheck_star2.every((number) => struckNumbersCopy.includes(number))) {
               claimIsValid = true
             }
           }
           break;
         case 'FULL_HOUSE_1':
           if (!claimed.includes("FULL_HOUSE_2")) {
-            if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
+            if (ticket.flat().filter(num => num !== null).every(num => struckNumbersCopy.includes(num))) {
               claimIsValid = true
             }
           }
           break;
         case 'FULL_HOUSE_2':
           if (!claimed.includes("FULL_HOUSE_1")) {
-            if (ticket.flat().filter(num => num !== null).every(num => struckNumbers.includes(num))) {
+            if (ticket.flat().filter(num => num !== null).every(num => struckNumbersCopy.includes(num))) {
               claimIsValid = true
             }
           }
@@ -256,7 +257,7 @@ function TicketDisplay() {
         <div className="score-category-list">
           {scoreCategories.map((category, index) => (
             <div key={index} className="score-category" style={claimedCategories.includes(category.category) ? { backgroundColor: "#737272" } : {}}>
-              <div className="category" style={claimedCategories.includes(category.category) ? { color: "white" } : {}}>{category.category}</div>
+              <div className="category" style={claimedCategories.includes(category.category) ? { color: "white" } : {}}>{category.displayName}</div>
               <div className="score" style={claimedCategories.includes(category.category) ? { color: "white" } : {}}>{category.score}</div>
               <div className="info-icon">
                 <FontAwesomeIcon icon={faInfoCircle} />
