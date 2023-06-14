@@ -25,6 +25,7 @@ function PlayerList() {
               <tr>
                 <th>Name</th>
                 <th>Score</th>
+                <th>Winning Category</th>
               </tr>
             </thead>
             <tbody>
@@ -32,6 +33,9 @@ function PlayerList() {
                 <tr key={index}>
                   <td>{player.userName}</td>
                   <td>{player.score}</td>
+                  <td>{player.scoreCategory.length && player.scoreCategory.map((item) => item.category).map((displayItem) => (
+                    <p key={displayItem}>{displayItem}</p> 
+                  ))}</td>
                 </tr>
               ))}
             </tbody>
