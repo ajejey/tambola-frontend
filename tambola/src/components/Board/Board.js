@@ -12,7 +12,7 @@ function Board() {
   const [calledNumbers, setCalledNumbers] = useState([]);
   const [selectedChip, setSelectedChip] = useState('3000')
   const [disableSelections, setDisableSelections] = useState(false)
-  const [callingMuted, setCallingMuted] = useState(false)
+  const [callingMuted, setCallingMuted] = useState(true)
   const [isCalling, setIsCalling] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const board = [];
