@@ -176,6 +176,7 @@ function TicketDisplay() {
     setTicket(finalTicket)
   }
   console.log("struckNumber", struckNumbers)
+  console.log("ticket", ticket)
 
   useEffect(() => {
     if (claimed.length > 0) {
