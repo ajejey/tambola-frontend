@@ -11,9 +11,13 @@ export const GlobalProvider = ({ children }) => {
     const [host, setHost] = useState("")
     const [allCategoriesClaimed, setAllCategoriesClaimed] = useState(false)
     // const socket = io("http://localhost:5000")
+<<<<<<< HEAD
     // const socket = io("https://tambola-backend-production.up.railway.app/")
     const socket = io(process.env['REACT_APP_BACKEND_URL'])
 
+=======
+    const socket = io("https://tambola-backend-production.up.railway.app/")
+>>>>>>> b164424893e37992871c68250e9626e5509c1b42
 
     return (
         <GlobalContext.Provider
