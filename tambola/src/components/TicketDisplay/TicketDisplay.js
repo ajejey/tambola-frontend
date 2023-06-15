@@ -8,7 +8,7 @@ import { scoreCategories } from '../../constants/constants';
 import { useSearchParams } from 'react-router-dom';
 
 function TicketDisplay() {
-  const { roomID, userID, setAllUsers, setHost, setAllCategoriesClaimed, socket } = useContext(GlobalContext)
+  const { roomID, userID, setAllUsers, setHost, setAllCategoriesClaimed, userJoined, socket } = useContext(GlobalContext)
   const [ticket, setTicket] = useState([]);
   const [struckNumbers, setStruckNumbers] = useState([])
   const [claimedCategories, setClaimedCategories] = useState([]);
@@ -227,7 +227,7 @@ function TicketDisplay() {
     if (userID.length && roomID.length) {
       socket.emit('getTicket', { userName: userID, room: roomID })
     }
-  }, [userID, roomID]);
+  }, [userID, roomID, userJoined]);
 
   return (
     <div>
