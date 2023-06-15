@@ -9,7 +9,7 @@ import Background from '../Background/Background';
 import HowToPlay from '../HowToPlay/HowToPlay';
 
 export default function () {
-    const { roomID, setRoomID, userID, setUserID, setHost, socket } = useContext(GlobalContext)
+    const { roomID, setRoomID, userID, setUserID, setHost,userJoined, setUserJoined, socket } = useContext(GlobalContext)
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
 
@@ -17,7 +17,7 @@ export default function () {
         if (userID.length && roomID.length) {
             socket.emit('join', { room: roomID, userName: userID })
             setHost(userID)
-            navigate(`/game-room?userName=${userID}&roomName=${roomID}`)
+            // navigate(`/game-room?userName=${userID}&roomName=${roomID}`)
         }
     }
 
@@ -34,7 +34,16 @@ export default function () {
             document.execCommand("copy");
         }
     }
-      
+
+    useEffect(() => {
+        socket.on('join', joiningConfirmation => {
+            console.log("inside socket joiningConfirmation", joiningConfirmation);
+            if(joiningConfirmation.joined === true){
+                setUserJoined(true)
+                 navigate(`/game-room?userName=${userID}&roomName=${roomID}`)
+            }
+        });
+    }, [socket])
 
     useEffect(() => {
         // let newUserId = nanoid(4)
