@@ -6,8 +6,11 @@ import CreateRoom from './components/CreateRoom/CreateRoom';
 import Home from './components/Home/Home';
 import JoinRoom from './components/JoinRoom/JoinRoom';
 import GameRoom from './components/GameRoom/GameRoom';
+import ReactGA from "react-ga4";
+
 
 function App() {
+  ReactGA.initialize("G-HRZVY37W6Q");
   return (
     <div className="app">
       <Routes>
