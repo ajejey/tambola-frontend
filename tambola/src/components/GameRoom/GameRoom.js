@@ -3,6 +3,7 @@ import './GameRoom.css'
 import Board from '../Board/Board'
 import TicketDisplay from '../TicketDisplay/TicketDisplay'
 import PlayerList from '../PlayerList/PlayerList'
+import Header from '../Header/Header'
 import { GlobalContext } from '../../context/Provider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -32,6 +33,7 @@ export default function GameRoom() {
 
     return (
         <div className='main-background'>
+            <Header />
             <div onClick={handleHomeButtonClick} className="tambola">
                 <span>T</span>
                 <span>a</span>
@@ -41,8 +43,8 @@ export default function GameRoom() {
                 <span>l</span>
                 <span>a</span>
             </div>
-            <button onClick={handleHomeButtonClick} style={{width: "100px", margin: "12px 3vw", padding: "8px", borderRadius: "5px", cursor: "pointer"}}>Home</button>
-            <div style={{display: 'flex', justifyContent: "space-between", marginLeft:"3vw"}}>
+            <button onClick={handleHomeButtonClick} style={{ width: "100px", margin: "12px 3vw", padding: "8px", borderRadius: "5px", cursor: "pointer" }}>Home</button>
+            <div style={{ display: 'flex', justifyContent: "space-between", marginLeft: "3vw" }}>
                 <Board />
                 <TicketDisplay />
             </div>

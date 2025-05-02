@@ -1,0 +1,54 @@
+.about-us-container {
+    max-width: 800px;
+    margin: 20px auto 50px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    color: #333;
+}
+
+.about-us-container h1 {
+    text-align: center;
+    color: #e63946;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+.about-us-content {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0 15px;
+}
+
+.about-us-content section {
+    margin-bottom: 25px;
+}
+
+.about-us-content h2 {
+    color: #1d3557;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.about-us-content p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .about-us-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .about-us-container h1 {
+        font-size: 2rem;
+    }
+    
+    .about-us-content {
+        max-height: 65vh;
+    }
+}

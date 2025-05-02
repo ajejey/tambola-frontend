@@ -6,6 +6,7 @@ import { GlobalContext } from '../../context/Provider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import Background from '../Background/Background';
+import Header from '../Header/Header';
 import HowToPlay from '../HowToPlay/HowToPlay';
 
 export default function () {
@@ -34,7 +35,7 @@ export default function () {
             document.execCommand("copy");
         }
     }
-      
+
 
     useEffect(() => {
         // let newUserId = nanoid(4)
@@ -48,6 +49,7 @@ export default function () {
     return (
         <div>
             <Background />
+            <Header />
             <div className="tambola">
                 <span>T</span>
                 <span>a</span>
