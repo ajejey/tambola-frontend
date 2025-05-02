@@ -8,7 +8,7 @@ import { GlobalContext } from '../../context/Provider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export default function GameRoom() {
-    const { setRoomID, setUserID, socket } = useContext(GlobalContext)
+    const { setRoomID, setUserID,userJoined, setUserJoined, socket } = useContext(GlobalContext)
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
 
@@ -17,17 +17,22 @@ export default function GameRoom() {
         navigate("/")
     }
 
-    // useEffect(() => {
-    //     socket.on('join', joiningConfirmation => {
-    //         console.log("inside socket joiningConfirmation", joiningConfirmation);
-    //     });
-    // }, [socket])
+    useEffect(() => {
+        socket.on('join', joiningConfirmation => {
+            console.log("inside socket joiningConfirmation", joiningConfirmation);
+            if (joiningConfirmation.joined === true) {
+                setUserJoined(true)
+            }
+        });
+    }, [socket])
 
     useEffect(() => {
         if (Object.fromEntries([...searchParams])) {
             setUserID(Object.fromEntries([...searchParams]).userName)
             setRoomID(Object.fromEntries([...searchParams]).roomName)
-            socket.emit('join', { userName: Object.fromEntries([...searchParams]).userName, room: Object.fromEntries([...searchParams]).roomName })
+            // if(userJoined === false){
+                socket.emit('join', { userName: Object.fromEntries([...searchParams]).userName, room: Object.fromEntries([...searchParams]).roomName })
+            // }
         }
     }, [])
 

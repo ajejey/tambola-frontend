@@ -13,8 +13,11 @@ import Contact from './components/Contact/Contact';
 import FAQ from './components/FAQ/FAQ';
 import Blog from './components/Blog/Blog';
 import BlogPost from './components/Blog/BlogPost';
+import ReactGA from "react-ga4";
+
 
 function App() {
+  ReactGA.initialize("G-HRZVY37W6Q");
   return (
     <div className="app">
       <Routes>
