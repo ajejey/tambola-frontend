@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import './Home.css'
 import Background from '../Background/Background'
+import Header from '../Header/Header'
 import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from '../../context/Provider'
 import HowToPlay from '../HowToPlay/HowToPlay'
@@ -24,6 +25,7 @@ export default function Home() {
     return (
         <div>
             <Background />
+            <Header />
             <div className="tambola">
                 <span>T</span>
                 <span>a</span>

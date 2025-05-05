@@ -3,6 +3,7 @@ import './GameRoom.css'
 import Board from '../Board/Board'
 import TicketDisplay from '../TicketDisplay/TicketDisplay'
 import PlayerList from '../PlayerList/PlayerList'
+import Header from '../Header/Header'
 import { GlobalContext } from '../../context/Provider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -37,6 +38,7 @@ export default function GameRoom() {
 
     return (
         <div className='main-background'>
+            <Header />
             <div onClick={handleHomeButtonClick} className="tambola">
                 <span>T</span>
                 <span>a</span>

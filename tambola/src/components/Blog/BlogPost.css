@@ -1,0 +1,120 @@
+.blog-post-container {
+    max-width: 900px;
+    margin: 20px auto 50px;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    color: #333;
+}
+
+.blog-post-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.blog-post-header h1 {
+    color: #e63946;
+    margin-bottom: 15px;
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+.blog-post-meta {
+    color: #666;
+    font-size: 1rem;
+}
+
+.blog-post-content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.blog-post-content h2 {
+    color: #1d3557;
+    margin: 30px 0 15px;
+    font-size: 1.8rem;
+}
+
+.blog-post-content h3 {
+    color: #457b9d;
+    margin: 25px 0 15px;
+    font-size: 1.5rem;
+}
+
+.blog-post-content p {
+    margin-bottom: 20px;
+}
+
+.blog-post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.blog-post-content ul, 
+.blog-post-content ol {
+    margin: 20px 0;
+    padding-left: 25px;
+}
+
+.blog-post-content li {
+    margin-bottom: 10px;
+}
+
+.blog-post-content blockquote {
+    border-left: 4px solid #457b9d;
+    padding-left: 20px;
+    margin: 20px 0;
+    font-style: italic;
+    color: #555;
+}
+
+.blog-post-navigation {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+.back-to-blog {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #457b9d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-to-blog:hover {
+    background-color: #1d3557;
+}
+
+@media (max-width: 768px) {
+    .blog-post-container {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .blog-post-header h1 {
+        font-size: 2rem;
+    }
+    
+    .blog-post-content {
+        font-size: 1rem;
+    }
+    
+    .blog-post-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .blog-post-content h3 {
+        font-size: 1.3rem;
+    }
+}

@@ -5,6 +5,7 @@ import Background from '../Background/Background'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { nanoid } from 'nanoid'
 import HowToPlay from '../HowToPlay/HowToPlay'
+import Header from '../Header/Header'
 
 export default function JoinRoom() {
   const { roomID, setRoomID, userID, setUserID, userName, setUserJoined, userJoined, socket } = useContext(GlobalContext)
@@ -49,6 +50,7 @@ export default function JoinRoom() {
   return (
     <div>
       <Background />
+      <Header />
       <div className="tambola">
         <span>T</span>
         <span>a</span>
