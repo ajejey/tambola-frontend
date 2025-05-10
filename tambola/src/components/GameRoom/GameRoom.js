@@ -48,14 +48,11 @@ export default function GameRoom() {
                 <span>l</span>
                 <span>a</span>
             </div>
-            <button onClick={handleHomeButtonClick} style={{ width: "100px", margin: "12px 3vw", padding: "8px", borderRadius: "5px", cursor: "pointer" }}>Home</button>
-            <div style={{ display: 'flex', justifyContent: "space-between", marginLeft: "3vw" }}>
+            <button onClick={handleHomeButtonClick} className="home-button">Home</button>
+            <div className="game-container">
                 <Board />
                 <TicketDisplay />
             </div>
-            {/* <Board />
-            <br />
-            <TicketDisplay /> */}
             <PlayerList />
         </div>
     )

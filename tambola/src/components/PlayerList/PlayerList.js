@@ -18,11 +18,12 @@ function PlayerList() {
   return (
     <div>
       {players.length &&
-        <>
-          <h2 style={{ display: "flex", justifyContent: "center", marginBottom: "12px" }}>PLAYERS</h2>
+        <div className="player-container">
+          <h2 className="player-heading">PLAYERS</h2>
           <table className="player-table">
             <thead>
               <tr>
+                <th>Rank</th>
                 <th>Name</th>
                 <th>Score</th>
                 <th>Winning Category</th>
@@ -31,6 +32,7 @@ function PlayerList() {
             <tbody>
               {players.length && players.map((player, index) => (
                 <tr key={index}>
+                  <td>{index + 1}</td>
                   <td>{player.userName}</td>
                   <td>{player.score}</td>
                   <td>{player.scoreCategory.length && player.scoreCategory.map((item) => item.category).map((displayItem) => (
@@ -40,7 +42,7 @@ function PlayerList() {
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       }
       <HowToPlay />
     </div>

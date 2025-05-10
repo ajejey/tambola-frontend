@@ -1,8 +1,9 @@
 import React from 'react'
+import './howToPlay.css'
 
 function HowToPlay() {
     return (
-        <div style={{ margin: "5vh 25vw" }}>
+        <div className="how-to-play-container">
             <h2>How to Play Tambola</h2>
 
             <h3>Objective:</h3>

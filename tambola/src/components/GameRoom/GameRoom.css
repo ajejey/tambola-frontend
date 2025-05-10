@@ -7,7 +7,7 @@
     text-transform: uppercase;
     color: black;
     position: relative;
-    margin: 50px;
+    margin: 30px 10px;
     cursor: pointer;
   }
   
@@ -75,10 +75,77 @@
     }
   }
   
+  @media (max-width: 768px) {
+    .tambola {
+      font-size: 2.5rem;
+      margin: 20px 5px;
+    }
+  }
+  
   .main-background {
     background: linear-gradient(to left, #dddddd, #ffffff);
     width: 100%;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
   
+  .game-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    width: auto;
+    box-sizing: border-box;
+  }
+  
+  @media (max-width: 992px) {
+    .game-container {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  /* Fix for Surface Pro and similar devices */
+  @media (min-width: 900px) and (max-width: 1100px) {
+    .game-container {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  /* Fix for wider screens with unusual aspect ratios */
+  @media (min-width: 800px) and (max-width: 900px) {
+    .game-container {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  .home-button {
+    width: 100px;
+    margin: 12px 3vw;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    border: none;
+  }
+  
+  @media (max-width: 768px) {
+    .home-button {
+      width: 80px;
+      margin: 10px 3vw;
+    }
+  }
