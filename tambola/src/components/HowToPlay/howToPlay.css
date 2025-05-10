@@ -1,0 +1,31 @@
+.how-to-play-container {
+  max-width: 800px;
+  margin: 5vh auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .how-to-play-container {
+    margin: 3vh auto;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .how-to-play-container {
+    margin: 2vh auto;
+    padding: 0 10px;
+  }
+  
+  .how-to-play-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .how-to-play-container h3 {
+    font-size: 1.2rem;
+  }
+  
+  .how-to-play-container p {
+    font-size: 0.9rem;
+  }
+}

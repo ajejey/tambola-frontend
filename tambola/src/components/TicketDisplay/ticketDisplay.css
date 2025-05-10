@@ -1,15 +1,23 @@
 .ticket-display {
     max-width: 600px;
     margin: 20px auto;
-    /* border: 5px solid black; */
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20vh;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    width: 100%;
+  }
+  
+  @media (max-width: 992px) {
+    .ticket-display {
+      max-width: 100%;
+    }
   }
   
   .ticket-row {
     display: flex;
+    width: auto;
+    justify-content: center;
   }
   
   .ticket-cell {
@@ -25,17 +33,69 @@
     cursor: pointer;
   }
   
+  @media (max-width: 992px) {
+    .ticket-cell {
+      height: 40px;
+      width: 40px;
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .ticket-cell {
+      height: 35px;
+      width: 35px;
+      font-size: 1rem;
+    }
+  }
+  
+  /* Fix for Surface Pro and similar devices */
+  @media (min-width: 900px) and (max-width: 1100px) {
+    .ticket-cell {
+      height: 45px;
+      width: 45px;
+      font-size: 1.3rem;
+    }
+  }
+  
+  /* Fix for wider screens with unusual aspect ratios */
+  @media (min-width: 800px) and (max-width: 900px) {
+    .ticket-cell {
+      height: 42px;
+      width: 42px;
+      font-size: 1.2rem;
+    }
+  }
+  
   .ticket-cell.empty {
     background-color: #e2e2e2;
     color: #fff;
   }
-
+  
   .score-category-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
     margin-bottom: 30px;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @media (max-width: 576px) {
+    .score-category-list {
+      gap: 8px;
+    }
+  }
+  
+  /* Fix for Surface Pro and similar devices */
+  @media (min-width: 900px) and (max-width: 1100px) {
+    .score-category-list {
+      max-width: 700px;
+    }
   }
   
   .score-category {
@@ -46,6 +106,15 @@
     border-radius: 16px;
     font-size: 14px;
     border: 1px solid black;
+  }
+  
+  @media (max-width: 576px) {
+    .score-category {
+      padding: 6px 10px;
+      font-size: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
   
   .category {
@@ -109,6 +178,15 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s;
+    z-index: 100;
+  }
+  
+  @media (max-width: 576px) {
+    .tooltip {
+      width: 150px;
+      font-size: 12px;
+      padding: 6px;
+    }
   }
   
   .info-icon:hover .tooltip {

@@ -7,7 +7,32 @@
     max-width: 920px;
     margin: 20px auto;
     gap: 10px;
-    margin-right: 2vw;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  @media (max-width: 992px) {
+    .game-board {
+      max-width: 100%;
+      gap: 5px;
+      padding: 0 10px;
+    }
+  }
+  
+  /* Fix for Surface Pro and similar devices */
+  @media (min-width: 900px) and (max-width: 1100px) {
+    .game-board {
+      max-width: 800px;
+      gap: 8px;
+    }
+  }
+  
+  /* Fix for wider screens with unusual aspect ratios */
+  @media (min-width: 800px) and (max-width: 900px) {
+    .game-board {
+      max-width: 750px;
+      gap: 6px;
+    }
   }
   
   .number {
@@ -24,6 +49,22 @@
     cursor: pointer;
   }
   
+  @media (max-width: 992px) {
+    .number {
+      height: 40px;
+      width: 40px;
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .number {
+      height: 30px;
+      width: 30px;
+      font-size: 1rem;
+    }
+  }
+  
   .number:hover {
     background-color: #ccc;
   }
@@ -32,8 +73,7 @@
     background-color: #333;
     color: #f2f2f2;
   }
-
-
+  
   .popping {
     animation: popping 0.5s ease-out infinite;
   }
@@ -49,7 +89,7 @@
       transform: scale(1);
     }
   }
-
+  
   .start-call-button {
     padding: 10px 20px;
     font-size: 16px;
@@ -60,17 +100,28 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: flex;
-    /* margin-left: 5vw; */
+  }
+  
+  @media (max-width: 576px) {
+    .start-call-button {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
   }
   
   .start-call-button:hover {
     background-color: #555;
   }
-
+  
   .chips {
     display: flex;
     gap: 10px;
-    /* margin-right: 5vw; */
+  }
+  
+  @media (max-width: 576px) {
+    .chips {
+      gap: 5px;
+    }
   }
   
   .chips button {
@@ -82,6 +133,13 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+  }
+  
+  @media (max-width: 576px) {
+    .chips button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
   }
   
   .chips button:hover {
