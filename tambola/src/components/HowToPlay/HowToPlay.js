@@ -1,9 +1,11 @@
 import React from 'react'
 import './howToPlay.css'
+import MoreGames from '../MoreGames/MoreGames'
 
 function HowToPlay() {
     return (
         <div className="how-to-play-container">
+            <MoreGames />
             <h2>How to Play Tambola</h2>
 
             <h3>Objective:</h3>
@@ -35,6 +37,7 @@ function HowToPlay() {
                 <br />
                 <a style={{ textDecoration: "none", color: "inherit"}} href='https://www.linkedin.com/in/ajey-nagarkatti-28273856/' target="_blank" rel="noreferrer">Ajey Nagarkatti</a>
             </div>
+            
         </div>
     )
 }
