@@ -35,7 +35,7 @@ function PlayerList() {
                   <td>{index + 1}</td>
                   <td>{player.userName}</td>
                   <td>{player.score}</td>
-                  <td>{player.scoreCategory.length && player.scoreCategory.map((item) => item.category).map((displayItem) => (
+                  <td>{player.scoreCategory.length && player.scoreCategory.map((item) => item.displayName).map((displayItem) => (
                     <p key={displayItem}>{displayItem}</p> 
                   ))}</td>
                 </tr>

@@ -6,9 +6,10 @@ import PlayerList from '../PlayerList/PlayerList'
 import Header from '../Header/Header'
 import { GlobalContext } from '../../context/Provider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import localStorageService from '../../services/localStorageService'
 
 export default function GameRoom() {
-    const { setRoomID, setUserID,userJoined, setUserJoined, socket } = useContext(GlobalContext)
+    const { setRoomID, setUserID, userJoined, setUserJoined, socket, setHost } = useContext(GlobalContext)
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
 
@@ -20,19 +21,44 @@ export default function GameRoom() {
     useEffect(() => {
         socket.on('join', joiningConfirmation => {
             console.log("inside socket joiningConfirmation", joiningConfirmation);
+            
+            // Check if the response contains host information
+            if (joiningConfirmation.host) {
+                // Update the host in the global context
+                setHost(joiningConfirmation.host);
+            }
+            
             if (joiningConfirmation.joined === true) {
-                setUserJoined(true)
+                setUserJoined(true);
             }
         });
-    }, [socket])
+        
+        // Clean up event listener on unmount
+        return () => {
+            socket.off('join');
+        };
+    }, [socket, setHost])
 
     useEffect(() => {
         if (Object.fromEntries([...searchParams])) {
-            setUserID(Object.fromEntries([...searchParams]).userName)
-            setRoomID(Object.fromEntries([...searchParams]).roomName)
-            // if(userJoined === false){
-                socket.emit('join', { userName: Object.fromEntries([...searchParams]).userName, room: Object.fromEntries([...searchParams]).roomName })
-            // }
+            const userName = Object.fromEntries([...searchParams]).userName;
+            const roomName = Object.fromEntries([...searchParams]).roomName;
+            
+            setUserID(userName);
+            setRoomID(roomName);
+            
+            // Check if this user is the host from localStorage
+            const storedHost = localStorageService.getHost(roomName);
+            const isHost = storedHost === userName;
+            
+            console.log("Joining room with host status:", isHost ? "I am the host" : "I am not the host");
+            
+            // Send the join event with host information
+            socket.emit('join', { 
+                userName: userName, 
+                room: roomName,
+                isHost: isHost
+            });
         }
     }, [])
 
