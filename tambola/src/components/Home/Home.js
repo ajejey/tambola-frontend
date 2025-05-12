@@ -46,7 +46,7 @@ export default function Home() {
                                 id="username" 
                                 value={userID} 
                                 onChange={handleUsernameChange} 
-                                placeholder="Enter your name"
+                                // placeholder="Enter your name"
                                 autoComplete="off"
                             />
                             <label htmlFor="username" className={userID.length > 0 ? "active" : ""}>
