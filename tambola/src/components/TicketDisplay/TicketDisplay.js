@@ -535,27 +535,6 @@ function TicketDisplay() {
           setLastCalledNumber(joinResponse.calledNumbers[joinResponse.calledNumbers.length - 1]);
         }
       }
-      
-      // Update the list of all users
-      if (joinResponse.allUsers) {
-        setAllUsers(joinResponse.allUsers);
-      }
-    });
-    
-    // Listen for userJoined event to update player list
-    socket.on('userJoined', (data) => {
-      console.log('User joined event received:', data);
-      if (data.allUsers) {
-        setAllUsers(data.allUsers);
-      }
-    });
-    
-    // Listen for userLeft event to update player list
-    socket.on('userLeft', (data) => {
-      console.log('User left event received:', data);
-      if (data.allUsers) {
-        setAllUsers(data.allUsers);
-      }
     });
   }, [socket, userID, roomID, ticket, struckNumbers]);
   
