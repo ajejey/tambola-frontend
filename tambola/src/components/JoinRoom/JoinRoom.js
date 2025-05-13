@@ -14,9 +14,8 @@ export default function JoinRoom() {
 
   const handleJoinRoom = () => {
     if (userID.length && roomID.length) {
-      // Emit join event and immediately navigate to game room
-      socket.emit('join', { room: roomID, userName: userID });
-      navigate(`/game-room?userName=${userID}&roomName=${roomID}`);
+      socket.emit('join', { room: roomID, userName: userID })
+      // navigate(`/game-room?userName=${userID}&roomName=${roomID}`)
     }
   }
 
@@ -33,20 +32,13 @@ export default function JoinRoom() {
 
   useEffect(() => {
     socket.on('join', joiningConfirmation => {
-      console.log("inside socket joiningConfirmation", joiningConfirmation);
-      // The backend no longer sends 'joined: true' property
-      // Instead, we check if the response contains the expected data
-      if (joiningConfirmation.userName && joiningConfirmation.room) {
-        setUserJoined(true);
-        navigate(`/game-room?userName=${userID}&roomName=${roomID}`);
-      }
+        console.log("inside socket joiningConfirmation", joiningConfirmation);
+        if(joiningConfirmation.joined === true){
+            setUserJoined(true)
+             navigate(`/game-room?userName=${userID}&roomName=${roomID}`)
+        }
     });
-    
-    // Clean up the event listener when component unmounts
-    return () => {
-      socket.off('join');
-    };
-  }, [socket, navigate, userID, roomID])
+}, [socket])
 
   useEffect(() => {
     // let newUserId = nanoid(4)

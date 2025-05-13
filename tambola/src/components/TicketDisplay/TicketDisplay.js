@@ -6,344 +6,118 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { scoreCategories } from '../../constants/constants';
 import { useSearchParams } from 'react-router-dom';
-import localStorageService from '../../services/localStorageService';
 
 function TicketDisplay() {
   const { roomID, userID, setAllUsers, setHost, setAllCategoriesClaimed, userJoined, socket } = useContext(GlobalContext)
-  
-  // Initialize state from localStorage if available
-  const [ticket, setTicket] = useState(() => {
-    return localStorageService.getTicket(roomID, userID) || [];
-  });
-  
-  const [struckNumbers, setStruckNumbers] = useState(() => {
-    return localStorageService.getStruckNumbers(roomID, userID) || [];
-  });
-  
-  const [claimedCategories, setClaimedCategories] = useState(() => {
-    return localStorageService.getClaimedCategories(roomID) || [];
-  });
-  
-  const [calledNumbers, setCalledNumbers] = useState(() => {
-    return localStorageService.getCalledNumbers(roomID) || [];
-  });
-  
+  const [ticket, setTicket] = useState([]);
+  const [struckNumbers, setStruckNumbers] = useState([])
+  const [claimedCategories, setClaimedCategories] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
   const [claimed, setClaimed] = useState([])
   const [disabledButtons, setDisabledButtons] = useState([]);
-  const [lastCalledNumber, setLastCalledNumber] = useState(null);
 
   const checkClaimedCategory = (claimedCategory) => {
-    let claimIsValid = false;
-    // Use a Set to ensure unique struck numbers
-    let struckNumbersCopy = [...new Set(struckNumbers)];
-    
-    // Debug logging to help diagnose issues
-    console.log("Checking claim for:", claimedCategory);
-    console.log("Current ticket:", ticket);
-    console.log("Struck numbers:", struckNumbersCopy);
-    
-    if (ticket && ticket.length) {
+    let claimIsValid = false
+    let struckNumbersCopy = [...new Set(struckNumbers)]
+    if (ticket.length) {
       switch (claimedCategory) {
         case 'EARLY_FIVE':
-          // Simply check if at least 5 numbers are struck
           if (struckNumbersCopy.length >= 5) {
-            claimIsValid = true;
-            console.log("EARLY_FIVE claim is valid");
+            claimIsValid = true
           }
           break;
-          
         case 'EARLY_SEVEN':
-          // Simply check if at least 7 numbers are struck
           if (struckNumbersCopy.length >= 7) {
-            claimIsValid = true;
-            console.log("EARLY_SEVEN claim is valid");
+            claimIsValid = true
           }
           break;
-          
         case 'MIDDLE_NUMBER':
-          try {
-            // Find the middle number in the middle row
-            // First get all non-null numbers in the middle row
-            const middleRowNumbers = ticket[1].filter(num => num !== null);
-            // The middle number should be the 3rd number (index 2) in the filtered array
-            if (middleRowNumbers.length >= 3) {
-              const middleNumber = middleRowNumbers[2];
-              console.log("Middle number:", middleNumber);
-              if (struckNumbersCopy.includes(middleNumber)) {
-                claimIsValid = true;
-                console.log("MIDDLE_NUMBER claim is valid");
-              }
-            }
-          } catch (error) {
-            console.error("Error checking MIDDLE_NUMBER:", error);
+          let middleNumber = ticket[1].filter((num) => num !== null)[2]
+          if (struckNumbersCopy.includes(middleNumber)) {
+            claimIsValid = true
           }
           break;
-          
         case 'FIRST_LINE':
-          try {
-            // Get all non-null numbers in the first row
-            const firstLineNumbers = ticket[0].filter(num => num !== null);
-            console.log("First line numbers:", firstLineNumbers);
-            console.log("Struck numbers:", struckNumbersCopy);
-            
-            // Debug output to check each number individually
-            firstLineNumbers.forEach(num => {
-              console.log(`Number ${num} is struck: ${struckNumbersCopy.includes(num)}`);
-            });
-            
-            // Check if all numbers in the first row are struck
-            if (firstLineNumbers.length > 0) {
-              const allStruck = firstLineNumbers.every(number => {
-                // Convert both to numbers to ensure proper comparison
-                return struckNumbersCopy.some(struckNum => Number(struckNum) === Number(number));
-              });
-              
-              if (allStruck) {
-                claimIsValid = true;
-                console.log("FIRST_LINE claim is valid");
-              } else {
-                console.log("FIRST_LINE claim is NOT valid - not all numbers are struck");
-              }
-            }
-          } catch (error) {
-            console.error("Error checking FIRST_LINE:", error);
+          let firstLineNumbers = ticket[0].filter((num) => num !== null)
+          if (firstLineNumbers.every((number) => struckNumbersCopy.includes(number))) {
+            claimIsValid = true
           }
           break;
-          
         case 'MIDDLE_LINE':
-          try {
-            // Get all non-null numbers in the middle row
-            const midLineNumbers = ticket[1].filter(num => num !== null);
-            console.log("Middle line numbers:", midLineNumbers);
-            console.log("Struck numbers:", struckNumbersCopy);
-            
-            // Debug output to check each number individually
-            midLineNumbers.forEach(num => {
-              console.log(`Number ${num} is struck: ${struckNumbersCopy.some(n => Number(n) === Number(num))}`);
-            });
-            
-            // Check if all numbers in the middle row are struck
-            if (midLineNumbers.length > 0) {
-              const allStruck = midLineNumbers.every(number => {
-                // Convert both to numbers to ensure proper comparison
-                return struckNumbersCopy.some(struckNum => Number(struckNum) === Number(number));
-              });
-              
-              if (allStruck) {
-                claimIsValid = true;
-                console.log("MIDDLE_LINE claim is valid");
-              } else {
-                console.log("MIDDLE_LINE claim is NOT valid - not all numbers are struck");
-              }
-            }
-          } catch (error) {
-            console.error("Error checking MIDDLE_LINE:", error);
+          let midLineNumbers = ticket[1].filter((num) => num !== null)
+          if (midLineNumbers.every((number) => struckNumbersCopy.includes(number))) {
+            claimIsValid = true
           }
           break;
-          
         case 'LAST_LINE':
-          try {
-            // Get all non-null numbers in the last row
-            const lastLineNumbers = ticket[2].filter(num => num !== null);
-            console.log("Last line numbers:", lastLineNumbers);
-            console.log("Struck numbers:", struckNumbersCopy);
-            
-            // Debug output to check each number individually
-            lastLineNumbers.forEach(num => {
-              console.log(`Number ${num} is struck: ${struckNumbersCopy.some(n => Number(n) === Number(num))}`);
-            });
-            
-            // Check if all numbers in the last row are struck
-            if (lastLineNumbers.length > 0) {
-              const allStruck = lastLineNumbers.every(number => {
-                // Convert both to numbers to ensure proper comparison
-                return struckNumbersCopy.some(struckNum => Number(struckNum) === Number(number));
-              });
-              
-              if (allStruck) {
-                claimIsValid = true;
-                console.log("LAST_LINE claim is valid");
-              } else {
-                console.log("LAST_LINE claim is NOT valid - not all numbers are struck");
-              }
-            }
-          } catch (error) {
-            console.error("Error checking LAST_LINE:", error);
+          let lastLineNumbers = ticket[2].filter((num) => num !== null)
+          if (lastLineNumbers.every((number) => struckNumbersCopy.includes(number))) {
+            claimIsValid = true
           }
           break;
-          
         case 'CORNERS_1':
-          try {
-            // Allow claiming CORNERS_1 regardless of CORNERS_2 status
-            // Get the corner numbers
-            const firstRow = ticket[0].filter(num => num !== null);
-            const lastRow = ticket[2].filter(num => num !== null);
-            
-            if (firstRow.length >= 5 && lastRow.length >= 5) {
-              const topLeft = firstRow[0];
-              const topRight = firstRow[4];
-              const bottomLeft = lastRow[0];
-              const bottomRight = lastRow[4];
-              
-              console.log("Corner numbers (CORNERS_1):", [topLeft, topRight, bottomLeft, bottomRight]);
-              console.log("Struck numbers for corners check:", struckNumbersCopy);
-              
-              // Debug each corner individually
-              console.log(`TopLeft ${topLeft} struck: ${struckNumbersCopy.some(n => Number(n) === Number(topLeft))}`);
-              console.log(`TopRight ${topRight} struck: ${struckNumbersCopy.some(n => Number(n) === Number(topRight))}`);
-              console.log(`BottomLeft ${bottomLeft} struck: ${struckNumbersCopy.some(n => Number(n) === Number(bottomLeft))}`);
-              console.log(`BottomRight ${bottomRight} struck: ${struckNumbersCopy.some(n => Number(n) === Number(bottomRight))}`);
-              
-              // Use proper number comparison
-              if (struckNumbersCopy.some(n => Number(n) === Number(topLeft)) && 
-                  struckNumbersCopy.some(n => Number(n) === Number(topRight)) && 
-                  struckNumbersCopy.some(n => Number(n) === Number(bottomLeft)) && 
-                  struckNumbersCopy.some(n => Number(n) === Number(bottomRight))) {
-                claimIsValid = true;
-                console.log("CORNERS_1 claim is valid");
-              } else {
-                console.log("CORNERS_1 claim is NOT valid - not all corners are struck");
-              }
+          if (!claimed.includes("CORNERS_2")) {
+            let firstLineNumFirst_corner1 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_corner1 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_corner1 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_corner1 = ticket[2].filter((num) => num !== null)[4]
+            let arrayTocheck_corner1 = [firstLineNumFirst_corner1, firstLineNumFifth_corner1, lastLineNumFirst_corner1, lastLineNumFifth_corner1]
+            if (arrayTocheck_corner1.every((number) => struckNumbersCopy.includes(number))) {
+              claimIsValid = true
             }
-          } catch (error) {
-            console.error("Error checking CORNERS_1:", error);
           }
           break;
-          
         case 'CORNERS_2':
-          try {
-            // Allow claiming CORNERS_2 regardless of CORNERS_1 status
-            // Get the corner numbers
-            const firstRow = ticket[0].filter(num => num !== null);
-            const lastRow = ticket[2].filter(num => num !== null);
-            
-            if (firstRow.length >= 5 && lastRow.length >= 5) {
-              const topLeft = firstRow[0];
-              const topRight = firstRow[4];
-              const bottomLeft = lastRow[0];
-              const bottomRight = lastRow[4];
-              
-              console.log("Corner numbers (CORNERS_2):", [topLeft, topRight, bottomLeft, bottomRight]);
-              console.log("Struck numbers for corners check:", struckNumbersCopy);
-              
-              // Debug each corner individually
-              console.log(`TopLeft ${topLeft} struck: ${struckNumbersCopy.some(n => Number(n) === Number(topLeft))}`);
-              console.log(`TopRight ${topRight} struck: ${struckNumbersCopy.some(n => Number(n) === Number(topRight))}`);
-              console.log(`BottomLeft ${bottomLeft} struck: ${struckNumbersCopy.some(n => Number(n) === Number(bottomLeft))}`);
-              console.log(`BottomRight ${bottomRight} struck: ${struckNumbersCopy.some(n => Number(n) === Number(bottomRight))}`);
-              
-              // Use proper number comparison
-              if (struckNumbersCopy.some(n => Number(n) === Number(topLeft)) && 
-                  struckNumbersCopy.some(n => Number(n) === Number(topRight)) && 
-                  struckNumbersCopy.some(n => Number(n) === Number(bottomLeft)) && 
-                  struckNumbersCopy.some(n => Number(n) === Number(bottomRight))) {
-                claimIsValid = true;
-                console.log("CORNERS_2 claim is valid");
-              } else {
-                console.log("CORNERS_2 claim is NOT valid - not all corners are struck");
-              }
+          if (!claimed.includes("CORNERS_1")) {
+            let firstLineNumFirst_corner2 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_corner2 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_corner2 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_corner2 = ticket[2].filter((num) => num !== null)[4]
+            let arrayTocheck_corner2 = [firstLineNumFirst_corner2, firstLineNumFifth_corner2, lastLineNumFirst_corner2, lastLineNumFifth_corner2]
+            if (arrayTocheck_corner2.every((number) => struckNumbersCopy.includes(number))) {
+              claimIsValid = true
             }
-          } catch (error) {
-            console.error("Error checking CORNERS_2:", error);
           }
           break;
         case 'STAR_1':
-          try {
-            // Allow claiming STAR_1 regardless of STAR_2 status
-            // Get the corner numbers and middle number
-            const firstRow = ticket[0].filter(num => num !== null);
-            const middleRow = ticket[1].filter(num => num !== null);
-            const lastRow = ticket[2].filter(num => num !== null);
-            
-            if (firstRow.length >= 5 && middleRow.length >= 3 && lastRow.length >= 5) {
-              const topLeft = firstRow[0];
-              const topRight = firstRow[4];
-              const middle = middleRow[2];
-              const bottomLeft = lastRow[0];
-              const bottomRight = lastRow[4];
-              
-              console.log("Star numbers (STAR_1):", [topLeft, topRight, middle, bottomLeft, bottomRight]);
-              
-              if (struckNumbersCopy.includes(topLeft) && 
-                  struckNumbersCopy.includes(topRight) && 
-                  struckNumbersCopy.includes(middle) && 
-                  struckNumbersCopy.includes(bottomLeft) && 
-                  struckNumbersCopy.includes(bottomRight)) {
-                claimIsValid = true;
-                console.log("STAR_1 claim is valid");
-              }
+          if (!claimed.includes("STAR_2")) {
+            let firstLineNumFirst_star1 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_star1 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_star1 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_star1 = ticket[2].filter((num) => num !== null)[4]
+            let middleNumber_star1 = ticket[1].filter((num) => num !== null)[2]
+            let arrayTocheck_star1 = [firstLineNumFirst_star1, firstLineNumFifth_star1, lastLineNumFirst_star1, lastLineNumFifth_star1, middleNumber_star1]
+            if (arrayTocheck_star1.every((number) => struckNumbersCopy.includes(number))) {
+              claimIsValid = true
             }
-          } catch (error) {
-            console.error("Error checking STAR_1:", error);
           }
           break;
-          
         case 'STAR_2':
-          try {
-            // Allow claiming STAR_2 regardless of STAR_1 status
-            // Get the corner numbers and middle number
-            const firstRow = ticket[0].filter(num => num !== null);
-            const middleRow = ticket[1].filter(num => num !== null);
-            const lastRow = ticket[2].filter(num => num !== null);
-            
-            if (firstRow.length >= 5 && middleRow.length >= 3 && lastRow.length >= 5) {
-              const topLeft = firstRow[0];
-              const topRight = firstRow[4];
-              const middle = middleRow[2];
-              const bottomLeft = lastRow[0];
-              const bottomRight = lastRow[4];
-              
-              console.log("Star numbers (STAR_2):", [topLeft, topRight, middle, bottomLeft, bottomRight]);
-              
-              if (struckNumbersCopy.includes(topLeft) && 
-                  struckNumbersCopy.includes(topRight) && 
-                  struckNumbersCopy.includes(middle) && 
-                  struckNumbersCopy.includes(bottomLeft) && 
-                  struckNumbersCopy.includes(bottomRight)) {
-                claimIsValid = true;
-                console.log("STAR_2 claim is valid");
-              }
+          if (!claimed.includes("STAR_1")) {
+            let firstLineNumFirst_star2 = ticket[0].filter((num) => num !== null)[0]
+            let firstLineNumFifth_star2 = ticket[0].filter((num) => num !== null)[4]
+            let lastLineNumFirst_star2 = ticket[2].filter((num) => num !== null)[0]
+            let lastLineNumFifth_star2 = ticket[2].filter((num) => num !== null)[4]
+            let middleNumber_star2 = ticket[1].filter((num) => num !== null)[2]
+            let arrayTocheck_star2 = [firstLineNumFirst_star2, firstLineNumFifth_star2, lastLineNumFirst_star2, lastLineNumFifth_star2, middleNumber_star2]
+            if (arrayTocheck_star2.every((number) => struckNumbersCopy.includes(number))) {
+              claimIsValid = true
             }
-          } catch (error) {
-            console.error("Error checking STAR_2:", error);
           }
           break;
-          
         case 'FULL_HOUSE_1':
-          try {
-            // Allow claiming FULL_HOUSE_1 regardless of FULL_HOUSE_2 status
-            // Get all non-null numbers in the ticket
-            const allNumbers = ticket.flat().filter(num => num !== null);
-            console.log("All ticket numbers (FULL_HOUSE_1):", allNumbers);
-            
-            // Check if all numbers in the ticket are struck
-            if (allNumbers.length > 0 && 
-                allNumbers.every(number => struckNumbersCopy.includes(number))) {
-              claimIsValid = true;
-              console.log("FULL_HOUSE_1 claim is valid");
+          if (!claimed.includes("FULL_HOUSE_2")) {
+            if (ticket.flat().filter(num => num !== null).every(num => struckNumbersCopy.includes(num))) {
+              claimIsValid = true
             }
-          } catch (error) {
-            console.error("Error checking FULL_HOUSE_1:", error);
           }
           break;
-          
         case 'FULL_HOUSE_2':
-          try {
-            // Allow claiming FULL_HOUSE_2 regardless of FULL_HOUSE_1 status
-            // Get all non-null numbers in the ticket
-            const allNumbers = ticket.flat().filter(num => num !== null);
-            console.log("All ticket numbers (FULL_HOUSE_2):", allNumbers);
-            
-            // Check if all numbers in the ticket are struck
-            if (allNumbers.length > 0 && 
-                allNumbers.every(number => struckNumbersCopy.includes(number))) {
-              claimIsValid = true;
-              console.log("FULL_HOUSE_2 claim is valid");
+          if (!claimed.includes("FULL_HOUSE_1")) {
+            if (ticket.flat().filter(num => num !== null).every(num => struckNumbersCopy.includes(num))) {
+              claimIsValid = true
             }
-          } catch (error) {
-            console.error("Error checking FULL_HOUSE_2:", error);
           }
           break;
         default:
@@ -385,19 +159,8 @@ function TicketDisplay() {
 
   const handleNumberClick = (number) => {
     if (number !== null && userID.length && roomID.length) {
-      console.log("clicked number ", number, userID, roomID);
-      
-      // Check if the number is in called numbers from localStorage
-      const calledNumbers = localStorageService.getCalledNumbers(roomID);
-      
-      if (calledNumbers.includes(number)) {
-        // Add to struck numbers in localStorage before emitting to server
-        const newStruckNumbers = [...struckNumbers, number];
-        localStorageService.saveStruckNumbers(newStruckNumbers, roomID, userID);
-        
-        // Emit to server to synchronize with other players
-        socket.emit('struckNumber', { number: number, userName: userID, room: roomID });
-      }
+      console.log("clicked number ", number, userID, roomID)
+      socket.emit('struckNumber', { number: number, userName: userID, room: roomID })
     }
   }
 
@@ -426,118 +189,34 @@ function TicketDisplay() {
   }, [claimed])
   console.log("claimed", claimed)
 
-  // Save ticket to localStorage when it changes
-  useEffect(() => {
-    if (ticket.length > 0 && roomID && userID) {
-      localStorageService.saveTicket(ticket, roomID, userID);
-    }
-  }, [ticket, roomID, userID]);
-  
-  // Save struck numbers to localStorage when they change
-  useEffect(() => {
-    if (struckNumbers.length > 0 && roomID && userID) {
-      localStorageService.saveStruckNumbers(struckNumbers, roomID, userID);
-    }
-  }, [struckNumbers, roomID, userID]);
-  
-  // Save claimed categories to localStorage when they change
-  useEffect(() => {
-    if (claimedCategories.length > 0 && roomID) {
-      localStorageService.saveClaimedCategories(claimedCategories, roomID);
-    }
-  }, [claimedCategories, roomID]);
-  
   useEffect(() => {
     socket.on('struckNumber', struckNumberResponse => {
       console.log("inside socket struck numbers", struckNumberResponse)
       if (struckNumberResponse.userName === userID) {
-        setStruckNumbers(prevStruckNumbers => {
-          const newStruckNumbers = [...prevStruckNumbers, struckNumberResponse?.number];
-          // Save to localStorage
-          localStorageService.saveStruckNumbers(newStruckNumbers, roomID, userID);
-          return newStruckNumbers;
-        });
+        setStruckNumbers(prevStruckNumbers => [...prevStruckNumbers, struckNumberResponse?.number]);
       }
     });
     socket.on('private', userTicket => {
-      console.log("inside socket ticket", userTicket);
-      
+      console.log("inside socket ticket {userName,numbers,allUserNames}", userTicket);
       if (userTicket.userName === userID) {
-        // Check if we should use the stored ticket or the new one
-        if (userTicket.useStoredTicket) {
-          console.log("Using stored ticket from localStorage");
-          // We keep using the ticket loaded from localStorage in the useState initialization
-          // No need to call convertTicketFormat as we already have the ticket in the right format
-        } else if (userTicket.numbers) {
-          console.log("Using new ticket from server");
-          convertTicketFormat(userTicket.numbers);
-        }
+        convertTicketFormat(userTicket.numbers)
       }
-      
-      // Save called numbers to localStorage if they exist
-      if (userTicket.calledNumbers && userTicket.calledNumbers.length > 0) {
-        localStorageService.saveCalledNumbers(userTicket.calledNumbers, roomID);
-        setCalledNumbers(userTicket.calledNumbers);
-        if (userTicket.calledNumbers.length > 0) {
-          setLastCalledNumber(userTicket.calledNumbers[userTicket.calledNumbers.length - 1]);
-        }
-      }
-      
-      setAllUsers(userTicket.allUsers);
-      setHost(userTicket.allUsers[0]?.userName);
+      setAllUsers(userTicket.allUsers)
+      setHost(userTicket.allUsers[0]?.userName)
     });
     socket.on('category', categoryAndScores => {
       console.log("inside socket categoryAndScores", categoryAndScores)
-      setAllUsers(categoryAndScores.allUsers);
-      
-      const newClaimedCategories = categoryAndScores.categoryCard.category
-        .filter((item) => item.claimed === true)
-        .map((item) => item.category);
-      
-      setClaimedCategories(newClaimedCategories);
-      
-      // Save claimed categories to localStorage
-      localStorageService.saveClaimedCategories(newClaimedCategories, roomID);
-      
+      setAllUsers(categoryAndScores.allUsers)
+      setClaimedCategories(categoryAndScores.categoryCard.category.filter((item) => item.claimed === true).map((item) => item.category))
       if (categoryAndScores.userName === userID) {
-        const userClaimed = categoryAndScores?.scoreCategory?.map((item) => item.category);
-        setClaimed(userClaimed);
+        setClaimed(categoryAndScores?.scoreCategory?.map((item) => item.category));
       }
     });
-    
-    socket.on('calledNumber', calledNumbers => {
-      // Save called numbers to localStorage
-      if (calledNumbers && calledNumbers.length > 0) {
-        localStorageService.saveCalledNumbers(calledNumbers, roomID);
-        setCalledNumbers(calledNumbers);
-        setLastCalledNumber(calledNumbers[calledNumbers.length - 1]);
-        
-        // Auto-strike the called number if it's in the ticket
-        const lastNumber = calledNumbers[calledNumbers.length - 1];
-        if (lastNumber) {
-          // Check if the number is in the ticket and not already struck
-          const isInTicket = ticket.some(row => row.includes(lastNumber));
-          if (isInTicket && !struckNumbers.includes(lastNumber)) {
-            const updatedStruckNumbers = [...struckNumbers, lastNumber];
-            setStruckNumbers(updatedStruckNumbers);
-            localStorageService.saveStruckNumbers(updatedStruckNumbers, roomID, userID);
-          }
-        }
-      }
-    });
-    
-    socket.on('join', joinResponse => {
-      // Save called numbers to localStorage if they exist
-      if (joinResponse.calledNumbers && joinResponse.calledNumbers.length > 0) {
-        localStorageService.saveCalledNumbers(joinResponse.calledNumbers, roomID);
-        setCalledNumbers(joinResponse.calledNumbers);
-        if (joinResponse.calledNumbers.length > 0) {
-          setLastCalledNumber(joinResponse.calledNumbers[joinResponse.calledNumbers.length - 1]);
-        }
-      }
-    });
-  }, [socket, userID, roomID, ticket, struckNumbers]);
-  
+    // socket.on('error', errorMessage => {
+    //   console.log("getTicket error", errorMessage)
+    // });
+  }, [socket])
+
   useEffect(() => {
     setClaimedCategories([])
     if (Object.keys(Object.fromEntries([...searchParams])).some(str => str.includes("claimed"))) {
@@ -545,38 +224,13 @@ function TicketDisplay() {
       setClaimed(allClaimed.map(key => Object.fromEntries([...searchParams])[key]))
     }
     console.log("inside [useffect", userID, roomID)
-    
     if (userID.length && roomID.length) {
-      // Check if we already have a ticket in localStorage
-      const storedTicket = localStorageService.getTicket(roomID, userID);
-      const hasStoredTicket = storedTicket && storedTicket.length > 0;
-      
-      console.log("Checking for stored ticket:", hasStoredTicket ? "Found" : "Not found");
-      
-      // Send hasStoredTicket flag to the server
-      socket.emit('getTicket', { 
-        userName: userID, 
-        room: roomID,
-        hasStoredTicket: hasStoredTicket
-      });
+      socket.emit('getTicket', { userName: userID, room: roomID })
     }
   }, [userID, roomID, userJoined]);
 
   return (
     <div>
-      {lastCalledNumber && (
-        <div className="last-called-number">
-          <h3>Last Called Number: <span className="number-highlight">{lastCalledNumber}</span></h3>
-        </div>
-      )}
-      {/* <div className="called-numbers-container">
-        <h4>Called Numbers:</h4>
-        <div className="called-numbers-list">
-          {calledNumbers.map((number, index) => (
-            <span key={index} className="called-number">{number}</span>
-          ))}
-        </div>
-      </div> */}
       <div className="ticket-display">
         {ticket.map((row, rowIndex) => (
           <div className="ticket-row" key={rowIndex}>
