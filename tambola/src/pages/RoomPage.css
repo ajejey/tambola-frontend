@@ -1,0 +1,185 @@
+/* GameScreen.css */
+.game-screen {
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.game-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.game-header p {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.leave-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.leave-btn:hover {
+  background-color: #c82333;
+}
+
+.panels-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.left-panel, .right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.called-numbers-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.called-numbers-container h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #343a40;
+}
+
+.called-numbers {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.called-number {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffc107;
+  color: #212529;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.controls-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.start-btn, .claim-btn {
+  width: fit-content;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.start-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.start-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.claim-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.prize-claim {
+  display: flex;
+  gap: 10px;
+}
+
+.prize-select {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.info-section {
+  background: white;
+  padding: 20px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.players-list, .claimed-prizes {
+  margin-bottom: 15px;
+}
+
+.info-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #343a40;
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 5px;
+}
+
+.info-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-section li {
+  padding: 5px 0;
+  color: #495057;
+}
+
+.players-list .disconnected {
+  color: #6c757d;
+  font-style: italic;
+  text-decoration: line-through;
+}
+
+@media (max-width: 768px) {
+  .panels-container {
+    grid-template-columns: 1fr;
+  }
+}

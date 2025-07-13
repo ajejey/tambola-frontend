@@ -1,0 +1,76 @@
+/* Ticket.css */
+.ticket-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: fit-content;
+}
+
+.ticket-title {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #343a40;
+  font-weight: 600;
+}
+
+.ticket {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.ticket-row {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 5px;
+}
+
+.ticket-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(35px, 4vw, 40px);
+  height: clamp(35px, 4vw, 40px);
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #212529;
+  background-color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ticket-cell.empty {
+  background-color: #e9ecef;
+  border-color: #e9ecef;
+  color: #e9ecef;
+}
+
+.ticket-cell.called {
+  background-color: #007bff;
+  color: white;
+  animation: pop 0.3s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.ticket-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  color: #6c757d;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-style: italic;
+}
