@@ -29,7 +29,6 @@ const RoomPage = ({
   const isHost = myPlayerId === gameState?.host;
   const currentNumber = gameState?.numbersCalled[gameState.numbersCalled.length - 1];
 
-  console.log('Game state:', gameState);
 
   useEffect(() => {
     if (roomName) {

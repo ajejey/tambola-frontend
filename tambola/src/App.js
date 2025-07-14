@@ -12,10 +12,13 @@ import Contact from './oldComponents/Contact/Contact';
 import FAQ from './oldComponents/FAQ/FAQ';
 import Blog from './oldComponents/Blog/Blog';
 import BlogPost from './oldComponents/Blog/BlogPost';
+import ReactGA from "react-ga4";
+import MoreGames from './pages/MoreGames';
 
 const socket = io('https://tambola-backend-production.up.railway.app/' || 'http://localhost:3001');
 
 function App() {
+  ReactGA.initialize("G-HRZVY37W6Q");
   const [room, setRoom] = useState('');
   const [playerName, setPlayerName] = useState('');
   const [gameState, setGameState] = useState(null);
@@ -167,12 +170,10 @@ function App() {
   };
 
   const handleUpdateCallingInterval = (newInterval) => {
-    console.log('Updating calling interval to:', newInterval);
     socket.emit('updateCallingInterval', { roomName: room, interval: newInterval });
   };
 
   const handleToggleAutoCalling = (isAuto) => {
-    console.log('Toggling auto calling to:', isAuto);
     socket.emit('toggleAutoCalling', { roomName: room, autoCalling: isAuto });
   };
 
@@ -194,6 +195,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/more-games" element={<MoreGames />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/blog" element={<Blog />} />

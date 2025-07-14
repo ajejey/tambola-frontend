@@ -31,8 +31,9 @@ export default function Header() {
                         <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
                         <li><Link to="/faq" onClick={closeMenu}>FAQ</Link></li>
                         <li><Link to="/blog" onClick={closeMenu}>Blog</Link></li>
-                        <li><Link to="/privacy-policy" onClick={closeMenu}>Privacy Policy</Link></li>
-                        <li><Link to="/terms-of-service" onClick={closeMenu}>Terms of Service</Link></li>
+                        <li><Link to="/more-games" onClick={closeMenu}>More Games</Link></li>
+                        {/* <li><Link to="/privacy-policy" onClick={closeMenu}>Privacy Policy</Link></li>
+                        <li><Link to="/terms-of-service" onClick={closeMenu}>Terms of Service</Link></li> */}
                     </ul>
                 </nav>
             </div>
