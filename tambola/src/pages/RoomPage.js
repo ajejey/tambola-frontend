@@ -384,7 +384,10 @@ const RoomPage = ({
           {/* Player Actions */}
           <div className="bg-white rounded-lg p-4 shadow-md space-y-4">
             <div className="flex justify-between items-center">
-              <h3 className="text-xl font-semibold">Claim here</h3>
+              <div>
+                <h3 className="text-xl font-semibold">Claim here</h3>
+                <p className="text-md text-blue-700 mt-1"><strong>Click the corresponding prize button when you have the pattern!</strong></p>
+              </div>
               <button
                 onClick={() => setShowInfoModal(true)}
                 className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300 transition-colors"
