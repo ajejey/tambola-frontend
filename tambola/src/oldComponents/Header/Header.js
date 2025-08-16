@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Header.css'
+import motives_logo from '../../Motivs_cropped.png'
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false)
