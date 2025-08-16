@@ -178,7 +178,7 @@ const HomePage = ({ room, setRoom, playerName, setPlayerName, handleCreateRoom, 
               <span>l</span>
               <span>a</span>
             </div>
-            <p className="text-xl mb-8">Create your own game, invite friends, and have a blast!</p>
+            {/* <p className="text-xl mb-8">Create your own game, invite friends, and have a blast!</p> */}
           </div>
         </section>
 
