@@ -17,7 +17,9 @@ export default function Header() {
     return (
         <header className="main-header">
             <div className="header-container">
-                <Link to="/" className="logo" onClick={closeMenu}>Tambola</Link>
+                <Link to="/" className="logo" onClick={closeMenu}>
+                <img src={motives_logo} alt="Logo" />
+                </Link>
                 
                 <div className={`mobile-menu-button ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
                     <span></span>
