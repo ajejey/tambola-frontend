@@ -29,6 +29,12 @@
     color: #a8dadc;
 }
 
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
 .nav-menu ul {
     display: flex;
     list-style: none;
