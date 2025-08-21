@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Header.css'
-import motivsLogo from '../../Motivs_crop.jpg'
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false)
@@ -18,15 +17,15 @@ export default function Header() {
         <header className="main-header">
             <div className="header-container">
                 <Link to="/" className="logo" onClick={closeMenu}>
-                <img src={motivsLogo} alt="Logo" />
+                    TAMBOLA
                 </Link>
-                
+
                 <div className={`mobile-menu-button ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-                
+
                 <nav className={`nav-menu ${menuOpen ? 'active' : ''}`}>
                     <ul>
                         <li><Link to="/" onClick={closeMenu}>Home</Link></li>

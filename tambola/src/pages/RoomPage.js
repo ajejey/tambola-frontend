@@ -257,7 +257,7 @@ const RoomPage = ({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8 container mx-auto max-w-6xl">
       <header className="bg-white shadow-md rounded-lg p-4 mb-6 flex flex-col sm:flex-row items-center justify-between">
         <div className="text-center sm:text-left">
           <h1 className="text-3xl font-bold text-gray-800">Room: {roomName}</h1>
@@ -417,7 +417,6 @@ const RoomPage = ({
 
           {/* Game Info */}
           <div className="bg-white rounded-lg p-4 shadow-md space-y-6">
-            {isHost && (
             <div>
               <h3 className="text-xl font-semibold mb-3 border-b pb-2">Players</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -430,7 +429,6 @@ const RoomPage = ({
                 ))}
               </div>
             </div>
-                )}
             <div>
               <h3 className="text-xl font-semibold mb-3 border-b pb-2">Prizes Claimed</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

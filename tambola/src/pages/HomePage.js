@@ -178,7 +178,7 @@ const HomePage = ({ room, setRoom, playerName, setPlayerName, handleCreateRoom, 
               <span>l</span>
               <span>a</span>
             </div>
-            {/* <p className="text-xl mb-8">Create your own game, invite friends, and have a blast!</p> */}
+            <p className="text-xl mb-8">Create your own game, invite friends, and have a blast!</p>
           </div>
         </section>
 
@@ -365,19 +365,14 @@ const HomePage = ({ room, setRoom, playerName, setPlayerName, handleCreateRoom, 
                         value={room}
                         onChange={(e) => setRoom(e.target.value)}
                       />
-                          <div>
-                        <label htmlFor="player-name" className="block text-sm font-medium text-gray-700 mb-1 text-left">
-                          Please enter the phone number you used for registration to claim winnings
-                        </label>
                         <input
                           id="player-name"
                           type="text"
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-sm"
-                          placeholder="Enter your phone number"
+                          placeholder="Enter Your Name"
                           value={playerName}
                           onChange={(e) => setPlayerName(e.target.value)}
                         />
-                      </div>
                       <div className="mt-8 text-left">
                         <h3 className="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Player Configuration</h3>
                         <div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg">
